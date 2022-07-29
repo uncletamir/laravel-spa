@@ -1,17 +1,17 @@
 <template>
     <div class="container">
         <div class="row justify-content-center mt-5">
-            <div class="col-md-8">
+            <div class="col-lg">
                 <div class="card">
                     <div class="card-header">
-                        <h3 class="card-title">Data Inventory</h3>
+                        <h3 class="card-title">Data Manifest</h3>
                         <div class="card-tools">
                             <button
                                 type="button"
                                 class="btn btn-success"
                                 @click="showModal"
                             >
-                                Tambah Inventory
+                                Tambah Kategori
                             </button>
                         </div>
                     </div>
@@ -20,40 +20,27 @@
                             <div class="table-responsive">
                                 <table class="table">
                                     <tr>
-                                        <th>Kategori</th>
-                                        <th>Lokasi</th>
-                                        <th>Nama Inventory</th>
-                                        <th>Jumlah Inventory</th>
-                                        <th>QR Code</th>
+                                        <th>Nama Event</th>
+                                        <th>Lokasi Event</th>
+                                        <th>Tanggal Event</th>
+                                        <th>Penanggung Jawab</th>
+                                        <th>Details Inventory Event</th>                                        
                                         <th>Aksi</th>
                                     </tr>
-                                    <tr v-for="item in inventorys" :key="item.id">
-                                        <td>{{ item.kategori_id }}</td>
-                                        <td>{{ item.lokasi_id }}</td>
-                                        <td>{{ item.nama_inventory }}</td>
-                                        <td>{{ item.jumlah_inventory }}</td>
-                                        <!-- <td>
-                                            <qrcode-vue
-                                            :value="item.id"
-                                            background="#0b3954"
-                                            foreground="#20fc8f"
-                                            size="100"
-                                            level="H"
-                                            ></qrcode-vue>
-                                        </td> -->
+                                    <tr v-for="item in manifests" :key="item.id">
+                                        <td>{{ item.nama_event }}</td>
+                                        <td>{{ item.alamat_event }}</td>
+                                        <td>{{ item.tanggal_event }}</td>
+                                        <td>{{ item.penanggung_jawab }}</td>
                                         <td>
-                                            <button
+                                            <router-link :to="'/detail-manifest/' + item.id + '/details'">Details</router-link>
+                                            <!-- <button
                                                 type="button"
                                                 class="btn btn-success"
-                                                @click="showModalQr(item)"
+                                                @click="goToDetail(item.id)"
                                             >
-                                                QR
-                                            </button>
-                                            <!-- <a 
-                                            href="#"
-                                            @click="showModalQr(item)"
-                                            ><i class="fas fa-edit blue"></i
-                                            ></a> -->
+                                                Detail Barang
+                                            </button> -->
                                         </td>
                                         <td>
                                             <a
@@ -77,60 +64,6 @@
                 </div>
             </div>
         </div>
-        <!-- ModalQr -->
-        <div
-            class="modal fade"
-            id="modalqrmuncul"
-            tabindex="-1"
-            role="dialog"
-            aria-labelledby="modalqrmuncul1"
-            aria-hidden="true"
-        >
-            <div class="modal-dialog modal-dialog-centered" role="document">
-                <div class="modal-content">
-                    <div class="modal-header">
-                       
-                        <h5
-                            class="modal-title"
-                            id="exampleModalLongTitle"
-                            v-show="statusmodal"
-                        >
-                            Qr Code
-                        </h5>
-                        <button
-                            type="button"
-                            class="close"
-                            data-dismiss="modal"
-                            aria-label="Close"
-                        >
-                            <span aria-hidden="true">&times;</span>
-                        </button>
-                    </div>
-                    <div class="modal-body">
-                        <div class="info-box">
-                            <span class="info-box">
-                                <qrcode-vue
-                                :value="form.id"
-                                background="#FFFFFF"
-                                foreground="#000000"
-                                size="100"
-                                level="H"
-                                ></qrcode-vue>
-                            </span>
-
-                            <div class="info-box-content">
-                                <span class="info-box-text">{{ form.nama_inventory }}</span>
-                                <span class="info-box-text">ID: Antera_{{ form.kategori_id }}{{ form.id }}</span>                                
-                            </div>
-                        <!-- /.info-box-content -->
-                        </div>
-                    </div>
-                    
-                </div>
-            </div>
-        </div>
-        <!-- /ModalQr -->
-
         <!-- Modal -->
         <div
             class="modal fade"
@@ -148,14 +81,14 @@
                             id="exampleModalLongTitle"
                             v-show="!statusmodal"
                         >
-                            Tambah Inventory
+                            Tambah Manifest
                         </h5>
                         <h5
                             class="modal-title"
                             id="exampleModalLongTitle"
                             v-show="statusmodal"
                         >
-                            Ubah Inventory
+                            Ubah Manifest
                         </h5>
                         <button
                             type="button"
@@ -173,81 +106,78 @@
                     >
                         <div class="modal-body">
                             <div class="form-group">
-                                <select
-                                    class="form-control select2"
-                                    v-model="form.kategori_id"
+                                <input
+                                    type="text"
+                                    v-model="form.nama_event"
+                                    class="form-control"
+                                    placeholder="Nama Event"
                                     :class="{
-                                        'is-invalid': form.errors.has(
-                                            'kategori_id'
-                                        )
+                                        'is-invalid': form.errors.has('nama_event')
                                     }"
-                                >
-                                    <option value> Pilih Kategori </option>
-                                    <option
-                                        v-for="item in kategoris"
-                                        :key="item.id"
-                                        :value="item.id"
-                                    >
-                                        {{ item.nama_kategori }}
-                                    </option>
-                                </select>
+                                />
                                 <has-error
                                     :form="form"
-                                    field="kategori_id"
-                                ></has-error>
-                            </div>
-                            <div class="form-group">
-                                <select
-                                    class="form-control select1"
-                                    v-model="form.lokasi_id"
-                                    :class="{
-                                        'is-invalid': form.errors.has(
-                                            'lokasi_id'
-                                        )
-                                    }"
-                                >
-                                    <option value> Pilih Lokasi </option>
-                                    <option
-                                        v-for="item in lokasis"
-                                        :key="item.id"
-                                        :value="item.id"
-                                    >
-                                        {{ item.nama_lokasi }}
-                                    </option>
-                                </select>
-                                <has-error
-                                    :form="form"
-                                    field="lokasi_id"
+                                    field="nama_event"
                                 ></has-error>
                             </div>
                             <div class="form-group">
                                 <input
                                     type="text"
-                                    v-model="form.nama_inventory"
+                                    v-model="form.alamat_event"
                                     class="form-control"
-                                    placeholder="Nama Inventory"
+                                    placeholder="Lokasi Event"
                                     :class="{
-                                        'is-invalid': form.errors.has('nama_inventory')
+                                        'is-invalid': form.errors.has('alamat_event')
                                     }"
                                 />
                                 <has-error
                                     :form="form"
-                                    field="nama_inventory"
+                                    field="alamat_event"
+                                ></has-error>
+                            </div>
+                            <div class="form-group">
+                                <input
+                                    type="date"
+                                    v-model="form.tanggal_event"
+                                    class="form-control"
+                                    placeholder="Tanggal Event"
+                                    :class="{
+                                        'is-invalid': form.errors.has('tanggal_event')
+                                    }"
+                                />
+                                <has-error
+                                    :form="form"
+                                    field="tanggal_event"
                                 ></has-error>
                             </div>
                             <div class="form-group">
                                 <input
                                     type="text"
-                                    v-model="form.jumlah_inventory"
+                                    v-model="form.penanggung_jawab"
                                     class="form-control"
+                                    placeholder="Penanggung Jawab Event"
                                     :class="{
-                                        'is-invalid': form.errors.has('jumlah_inventory')
+                                        'is-invalid': form.errors.has('penanggung_jawab')
                                     }"
-                                    placeholder="Jumlah Inventory"
                                 />
                                 <has-error
                                     :form="form"
-                                    field="jumlah_inventory"
+                                    field="penanggung_jawab"
+                                ></has-error>
+                            </div>
+                            <div class="form-group">
+                                <input
+                                    type="text"
+                                    v-model="form.note"
+                                    class="form-control"
+                                    placeholder="Note"
+                                    :class="{
+                                        'is-invalid': form.errors.has('note')
+                                    }"
+                                />
+                                <has-error
+                                    :form="form"
+                                    field="note"
                                 ></has-error>
                             </div>
                         </div>
@@ -293,29 +223,29 @@
 </template>
 
 <script>
-import QrcodeVue from "qrcode.vue";
 export default {
-    components: {
-    QrcodeVue,
-  },
     data() {
         return {
             loading: false,
             disabled: false,
-            kategoris: {},
-            lokasis: {},
-            inventorys: {},
+            manifests: {},
             statusmodal: false,
             form: new Form({
                 id: "",
-                kategori_id: "",
-                lokasi_id: "",
-                nama_inventory: "",
-                jumlah_inventory: ""
+                nama_event:"",
+                alamat_event:"",
+                tanggal_event:"",
+                penanggung_jawab:"",
+                note:""               
             })
         };
     },
+    
     methods: {
+        // goToDetail(item){
+        //     // this.$router.push('/detail-manifest');
+        //     this.$router.push({path:'/detail-manifest', params: {id: "1" }}); 
+        // },
         showModal() {
             this.statusmodal = false;
             this.form.reset();
@@ -327,21 +257,11 @@ export default {
             $("#modalmuncul").modal("show");
             this.form.fill(item);
         },
-        showModalQr(item) {
-            this.statusmodal = true;
-            this.form.reset();
-            $("#modalqrmuncul").modal("show");
-            this.form.fill(item);
-        },
         loadData() {
             this.$Progress.start();
             axios
-                .get("api/kategori")
-                .then(({ data }) => (this.kategoris = data));
-            axios
-            .get("api/lokasi")
-            .then(({ data }) => (this.lokasis = data));
-            axios.get("api/inventory").then(({ data }) => (this.inventorys = data));
+                .get("api/manifest")
+                .then(({ data }) => (this.manifests = data));            
             this.$Progress.finish();
         },
         simpanData() {
@@ -349,7 +269,7 @@ export default {
             this.loading = true;
             this.disabled = true;
             this.form
-                .post("api/inventory")
+                .post("api/manifest")
                 .then(() => {
                     Fire.$emit("refreshData");
                     $("#modalmuncul").modal("hide");
@@ -372,7 +292,7 @@ export default {
             this.loading = true;
             this.disabled = true;
             this.form
-                .put("api/inventory/" + this.form.id)
+                .put("api/manifest/" + this.form.id)
                 .then(() => {
                     Fire.$emit("refreshData");
                     $("#modalmuncul").modal("hide");
@@ -402,7 +322,7 @@ export default {
             }).then(result => {
                 if (result.value) {
                     this.form
-                        .delete("api/inventory/" + id)
+                        .delete("api/manifest/" + id)
                         .then(() => {
                             Swal.fire(
                                 "Terhapus",
@@ -430,4 +350,3 @@ export default {
     }
 };
 </script>
-

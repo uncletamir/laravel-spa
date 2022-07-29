@@ -2,6 +2,9 @@ require('./bootstrap');
 
 window.Vue = require('vue').default;
 
+// import { ModelListSelect } from "vue-search-select";
+// import { ModelSelect } from "vue-search-select";
+// import "vue-search-select/dist/VueSearchSelect.css"
 import {Form, HasError, AlertError} from 'vform';
 window.Form  = Form;
 Vue.component(HasError.name, HasError);
@@ -37,7 +40,12 @@ let routes =[
     { path: '/data-level', component:require('./components/Pengguna/Data-level.vue').default },
     { path: '/kategori', component:require('./components/Inventory/Kategori.vue').default },
     { path: '/inventory', component:require('./components/Inventory/Inventory.vue').default },
-    { path: '/lokasi', component:require('./components/Inventory/Lokasi.vue').default }
+    { path: '/lokasi', component:require('./components/Inventory/Lokasi.vue').default },
+    { path: '/barang-keluar', component:require('./components/Manifest/BarangKeluar.vue').default },
+    { path: '/modelselect', component:require('./components/Manifest/ModelSelect.vue').default },
+    { path: '/qrstream', component:require('./components/Qr/QrStream.vue').default },
+    { path: '/manifest', component:require('./components/Manifest/DataManifest.vue').default },
+    { path: '/detail-manifest/:item.id/edit', props:true, component:require('./components/Manifest/CreateManifest.vue').default }
 ]
 
 Vue.component('example-component', require('./components/ExampleComponent.vue').default);

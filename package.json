@@ -27,9 +27,12 @@
     "dependencies": {
         "@fortawesome/fontawesome-free": "^5.15.3",
         "admin-lte": "^3.0.0-alpha.2",
+        "qrcode.vue": "^1.7.0",
         "sweetalert2": "^10.16.7",
         "vform": "^1.0.1",
         "vue-progressbar": "^0.7.5",
-        "vue-router": "^3.5.1"
+        "vue-qrcode-reader": "^3.1.0",
+        "vue-router": "^3.5.1",
+        "vue-search-select": "^2.9.5"
     }
 }

@@ -1,10 +1,39 @@
 <template>
     <div class="container">
-        <div class="row justify-content-center mt-5">
-            <div class="col-md-8">
+        <div class="justify-content-center mt-5">
+
+            <div class="col-lg">
+            <div class="card">
+              <div class="card-header">
+                <h3 class="card-title">
+                  <i class="fas fa-file-alt"></i>
+                  Manifest Event
+                </h3>
+                <pre>id: {{ id }}</pre>
+              </div>
+              <!-- /.card-header -->
+              <div class="card-body">
+                <dl>
+                  <dt>Nama Event</dt>
+                  <dd>A description list is perfect for defining terms.</dd>
+                  <dt>Alamat Event</dt>
+                  <dd>Vestibulum id ligula porta felis euismod semper eget lacinia odio sem nec elit.</dd>
+                  <dt>Tanggal Event</dt>
+                  <dd>Etiam porta sem malesuada magna mollis euismod.</dd>
+                  <dt>Penanggung Jawab</dt>
+                  <dd>Etiam porta sem malesuada magna mollis euismod.</dd>
+                </dl>
+              </div>
+              <!-- /.card-body -->
+            </div>
+            <!-- /.card -->
+          </div>
+          <!-- ./col -->
+
+            <div class="col-lg">
                 <div class="card">
                     <div class="card-header">
-                        <h3 class="card-title">Data Inventory</h3>
+                        <h3 class="card-title">Details Data Manifest</h3>
                         <div class="card-tools">
                             <button
                                 type="button"
@@ -20,41 +49,13 @@
                             <div class="table-responsive">
                                 <table class="table">
                                     <tr>
-                                        <th>Kategori</th>
-                                        <th>Lokasi</th>
                                         <th>Nama Inventory</th>
-                                        <th>Jumlah Inventory</th>
-                                        <th>QR Code</th>
+                                        <th>Jumlah</th>
                                         <th>Aksi</th>
                                     </tr>
-                                    <tr v-for="item in inventorys" :key="item.id">
-                                        <td>{{ item.kategori_id }}</td>
-                                        <td>{{ item.lokasi_id }}</td>
+                                    <tr v-for="item in dt_manifests" :key="item.id">
                                         <td>{{ item.nama_inventory }}</td>
-                                        <td>{{ item.jumlah_inventory }}</td>
-                                        <!-- <td>
-                                            <qrcode-vue
-                                            :value="item.id"
-                                            background="#0b3954"
-                                            foreground="#20fc8f"
-                                            size="100"
-                                            level="H"
-                                            ></qrcode-vue>
-                                        </td> -->
-                                        <td>
-                                            <button
-                                                type="button"
-                                                class="btn btn-success"
-                                                @click="showModalQr(item)"
-                                            >
-                                                QR
-                                            </button>
-                                            <!-- <a 
-                                            href="#"
-                                            @click="showModalQr(item)"
-                                            ><i class="fas fa-edit blue"></i
-                                            ></a> -->
-                                        </td>
+                                        <td>{{ item.Jumlah_inventory }}</td>
                                         <td>
                                             <a
                                                 href="#"
@@ -77,60 +78,6 @@
                 </div>
             </div>
         </div>
-        <!-- ModalQr -->
-        <div
-            class="modal fade"
-            id="modalqrmuncul"
-            tabindex="-1"
-            role="dialog"
-            aria-labelledby="modalqrmuncul1"
-            aria-hidden="true"
-        >
-            <div class="modal-dialog modal-dialog-centered" role="document">
-                <div class="modal-content">
-                    <div class="modal-header">
-                       
-                        <h5
-                            class="modal-title"
-                            id="exampleModalLongTitle"
-                            v-show="statusmodal"
-                        >
-                            Qr Code
-                        </h5>
-                        <button
-                            type="button"
-                            class="close"
-                            data-dismiss="modal"
-                            aria-label="Close"
-                        >
-                            <span aria-hidden="true">&times;</span>
-                        </button>
-                    </div>
-                    <div class="modal-body">
-                        <div class="info-box">
-                            <span class="info-box">
-                                <qrcode-vue
-                                :value="form.id"
-                                background="#FFFFFF"
-                                foreground="#000000"
-                                size="100"
-                                level="H"
-                                ></qrcode-vue>
-                            </span>
-
-                            <div class="info-box-content">
-                                <span class="info-box-text">{{ form.nama_inventory }}</span>
-                                <span class="info-box-text">ID: Antera_{{ form.kategori_id }}{{ form.id }}</span>                                
-                            </div>
-                        <!-- /.info-box-content -->
-                        </div>
-                    </div>
-                    
-                </div>
-            </div>
-        </div>
-        <!-- /ModalQr -->
-
         <!-- Modal -->
         <div
             class="modal fade"
@@ -173,6 +120,36 @@
                     >
                         <div class="modal-body">
                             <div class="form-group">
+                                <input
+                                    type="text"
+                                    v-model="form.manifest_id"
+                                    class="form-control"
+                                    placeholder="Manifest ID"
+                                    :class="{
+                                        'is-invalid': form.errors.has('manifest_id')
+                                    }"
+                                />
+                                <has-error
+                                    :form="form"
+                                    field="manifest_id"
+                                ></has-error>
+                            </div>
+                            <div class="form-group">
+                                <input
+                                    type="text"
+                                    v-model="form.inventory_id"
+                                    class="form-control"
+                                    placeholder="Inventory ID"
+                                    :class="{
+                                        'is-invalid': form.errors.has('inventory_id')
+                                    }"
+                                />
+                                <has-error
+                                    :form="form"
+                                    field="inventory_id"
+                                ></has-error>
+                            </div>
+                            <div class="form-group">
                                 <select
                                     class="form-control select2"
                                     v-model="form.kategori_id"
@@ -184,40 +161,16 @@
                                 >
                                     <option value> Pilih Kategori </option>
                                     <option
-                                        v-for="item in kategoris"
+                                        v-for="item in inventorys"
                                         :key="item.id"
                                         :value="item.id"
                                     >
-                                        {{ item.nama_kategori }}
+                                        {{ item.nama_inventory }}
                                     </option>
                                 </select>
                                 <has-error
                                     :form="form"
-                                    field="kategori_id"
-                                ></has-error>
-                            </div>
-                            <div class="form-group">
-                                <select
-                                    class="form-control select1"
-                                    v-model="form.lokasi_id"
-                                    :class="{
-                                        'is-invalid': form.errors.has(
-                                            'lokasi_id'
-                                        )
-                                    }"
-                                >
-                                    <option value> Pilih Lokasi </option>
-                                    <option
-                                        v-for="item in lokasis"
-                                        :key="item.id"
-                                        :value="item.id"
-                                    >
-                                        {{ item.nama_lokasi }}
-                                    </option>
-                                </select>
-                                <has-error
-                                    :form="form"
-                                    field="lokasi_id"
+                                    field="nama_inventory"
                                 ></has-error>
                             </div>
                             <div class="form-group">
@@ -237,7 +190,7 @@
                             </div>
                             <div class="form-group">
                                 <input
-                                    type="text"
+                                    type="number"
                                     v-model="form.jumlah_inventory"
                                     class="form-control"
                                     :class="{
@@ -293,23 +246,22 @@
 </template>
 
 <script>
-import QrcodeVue from "qrcode.vue";
 export default {
-    components: {
-    QrcodeVue,
-  },
+    props: ['item.id'],
+    
     data() {
+        
         return {
+            id: "",
             loading: false,
             disabled: false,
-            kategoris: {},
-            lokasis: {},
             inventorys: {},
+            dt_manifests: {},
             statusmodal: false,
             form: new Form({
                 id: "",
-                kategori_id: "",
-                lokasi_id: "",
+                manifest_id:"",
+                inventory_id:"",
                 nama_inventory: "",
                 jumlah_inventory: ""
             })
@@ -327,21 +279,17 @@ export default {
             $("#modalmuncul").modal("show");
             this.form.fill(item);
         },
-        showModalQr(item) {
-            this.statusmodal = true;
-            this.form.reset();
-            $("#modalqrmuncul").modal("show");
-            this.form.fill(item);
-        },
         loadData() {
-            this.$Progress.start();
+            this.$Progress.start();   
+            this.id.push(route.params.id);   
+            console.log(id);
             axios
-                .get("api/kategori")
-                .then(({ data }) => (this.kategoris = data));
+                .get("api/manifest")
+                .then(({ data }) => (this.inventorys = data));
             axios
-            .get("api/lokasi")
-            .then(({ data }) => (this.lokasis = data));
-            axios.get("api/inventory").then(({ data }) => (this.inventorys = data));
+                .get("api/inventory")
+                .then(({ data }) => (this.inventorys = data));
+            axios.get("api/detail-manifest").then(({ data }) => (this.dt_manifestss = data));
             this.$Progress.finish();
         },
         simpanData() {
@@ -349,7 +297,7 @@ export default {
             this.loading = true;
             this.disabled = true;
             this.form
-                .post("api/inventory")
+                .post("api/user")
                 .then(() => {
                     Fire.$emit("refreshData");
                     $("#modalmuncul").modal("hide");
@@ -372,7 +320,7 @@ export default {
             this.loading = true;
             this.disabled = true;
             this.form
-                .put("api/inventory/" + this.form.id)
+                .put("api/user/" + this.form.id)
                 .then(() => {
                     Fire.$emit("refreshData");
                     $("#modalmuncul").modal("hide");
@@ -402,7 +350,7 @@ export default {
             }).then(result => {
                 if (result.value) {
                     this.form
-                        .delete("api/inventory/" + id)
+                        .delete("api/user/" + id)
                         .then(() => {
                             Swal.fire(
                                 "Terhapus",
@@ -430,4 +378,3 @@ export default {
     }
 };
 </script>
-

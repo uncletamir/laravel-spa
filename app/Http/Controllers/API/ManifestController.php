@@ -4,9 +4,9 @@ namespace App\Http\Controllers\API;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-use App\Models\Inventory;
+use App\Models\Manifest;
 
-class InventoryController extends Controller
+class ManifestController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -15,7 +15,7 @@ class InventoryController extends Controller
      */
     public function index()
     {
-        return Inventory::all();
+        return Manifest::all();
     }
 
     /**
@@ -37,17 +37,18 @@ class InventoryController extends Controller
     public function store(Request $request)
     {
         $this->validate($request, [
-            'kategori_id' => 'required|integer',
-            'lokasi_id' => 'required|integer',
-            'nama_inventory' => 'required',
-            'jumlah_inventory' => 'required',
+            'nama_event' => 'required',
+            'alamat_event' => 'required',
+            'tanggal_event' => 'required',
+            'penanggung_jawab' => 'required',            
         ]);
 
-        return Inventory::create([
-            'kategori_id' => $request->kategori_id,
-            'lokasi_id' => $request->lokasi_id,
-            'nama_inventory' => $request->nama_inventory,
-            'jumlah_inventory' => $request->jumlah_inventory,
+        return Manifest::create([
+            'nama_event' => $request->nama_event,
+            'alamat_event' => $request->alamat_event,
+            'tanggal_event' => $request->tanggal_event,
+            'penanggung_jawab' => $request->penanggung_jawab,
+            'note'=> $request->note,            
         ]);
     }
 
@@ -57,10 +58,9 @@ class InventoryController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show(Request $request)
+    public function show($id)
     {
-        // $inventory = Inventory::where('id',$request->id)->get();
-        // return response()->json($inventory);
+        //
     }
 
     /**
@@ -84,21 +84,23 @@ class InventoryController extends Controller
     public function update(Request $request, $id)
     {
         $this->validate($request, [
-            'kategori_id' => 'required|integer',
-            'lokasi_id' => 'required|integer',
-            'nama_inventory' => 'required',
-            'jumlah_inventory' => 'required',
+            'nama_event' => 'required',
+            'alamat_event' => 'required',
+            'tanggal_event' => 'required',
+            'penanggung_jawab' => 'required',            
         ]);
 
-        $dtInventory = [
-            'kategori_id' => $request->kategori_id,
-            'lokasi_id' => $request->lokasi_id,
-            'nama_inventory' => $request->nama_inventory,
-            'jumlah_inventory' => $request->jumlah_inventory,
+        $dtManifest = [
+            'nama_event' => $request->nama_event,
+            'alamat_event' => $request->alamat_event,
+            'tanggal_event' => $request->tanggal_event,
+            'penanggung_jawab' => $request->penanggung_jawab,
+            'note'=> $request->note,
+            'status'=> $request->status,
         ];
 
-        $ubahData = Inventory::findOrFail($id);
-        $ubahData->update($dtInventory);
+        $ubahData = Manifest::findOrFail($id);
+        $ubahData->update($dtManifest);
     }
 
     /**
@@ -109,7 +111,7 @@ class InventoryController extends Controller
      */
     public function destroy($id)
     {
-        $hapus = Inventory::findOrFail($id);
+        $hapus = Manifest::findOrFail($id);
         $hapus->delete();
     }
 }

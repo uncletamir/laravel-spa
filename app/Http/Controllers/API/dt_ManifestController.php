@@ -4,9 +4,9 @@ namespace App\Http\Controllers\API;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-use App\Models\Inventory;
+use App\Models\dt_Manifest;
 
-class InventoryController extends Controller
+class dt_ManifestController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -15,7 +15,7 @@ class InventoryController extends Controller
      */
     public function index()
     {
-        return Inventory::all();
+        return dt_Manifest::all();
     }
 
     /**
@@ -37,15 +37,13 @@ class InventoryController extends Controller
     public function store(Request $request)
     {
         $this->validate($request, [
-            'kategori_id' => 'required|integer',
-            'lokasi_id' => 'required|integer',
+            'manifest_id' => 'required|integer',            
             'nama_inventory' => 'required',
             'jumlah_inventory' => 'required',
         ]);
 
         return Inventory::create([
-            'kategori_id' => $request->kategori_id,
-            'lokasi_id' => $request->lokasi_id,
+            'manifest_id' => $request->manifest_id,
             'nama_inventory' => $request->nama_inventory,
             'jumlah_inventory' => $request->jumlah_inventory,
         ]);
@@ -57,10 +55,9 @@ class InventoryController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show(Request $request)
+    public function show($id)
     {
-        // $inventory = Inventory::where('id',$request->id)->get();
-        // return response()->json($inventory);
+        //
     }
 
     /**
@@ -84,21 +81,19 @@ class InventoryController extends Controller
     public function update(Request $request, $id)
     {
         $this->validate($request, [
-            'kategori_id' => 'required|integer',
-            'lokasi_id' => 'required|integer',
+            'manifest_id' => 'required|integer',            
             'nama_inventory' => 'required',
             'jumlah_inventory' => 'required',
         ]);
 
-        $dtInventory = [
-            'kategori_id' => $request->kategori_id,
-            'lokasi_id' => $request->lokasi_id,
+        $dt_dtManifest=[
+            'manifest_id' => $request->manifest_id,
             'nama_inventory' => $request->nama_inventory,
             'jumlah_inventory' => $request->jumlah_inventory,
         ];
 
-        $ubahData = Inventory::findOrFail($id);
-        $ubahData->update($dtInventory);
+        $ubahData = Manifest::findOrFail($id);
+        $ubahData->update($dt_dtManifest);
     }
 
     /**
@@ -109,7 +104,7 @@ class InventoryController extends Controller
      */
     public function destroy($id)
     {
-        $hapus = Inventory::findOrFail($id);
+        $hapus = Manifest::findOrFail($id);
         $hapus->delete();
     }
 }

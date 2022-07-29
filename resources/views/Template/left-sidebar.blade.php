@@ -9,14 +9,14 @@
     <!-- Sidebar -->
     <div class="sidebar">
         <!-- Sidebar user panel (optional) -->
-        <div class="user-panel mt-3 pb-3 mb-3 d-flex">
+        <!-- <div class="user-panel mt-3 pb-3 mb-3 d-flex">
             <div class="image">
                 <img src="dist/img/user2-160x160.jpg" class="img-circle elevation-2" alt="User Image">
             </div>
             <div class="info">
                 <a href="#" class="d-block">Alexander Pierce</a>
             </div>
-        </div>
+        </div> -->
 
         <!-- Sidebar Menu -->
         <nav class="mt-2">
@@ -62,19 +62,25 @@
                     </a>
                     <ul class="nav nav-treeview">
                         <li class="nav-item">
-                            <router-link to="data-user" class="nav-link ">
+                            <router-link to="manifest" class="nav-link ">
+                                <i class="fas fa-cart-plus nav-icon green"></i>
+                                <p>Data Manifest</p>
+                            </router-link>
+                        </li>
+                        <li class="nav-item">
+                            <router-link to="barang-keluar" class="nav-link ">
                                 <i class="fas fa-cart-plus nav-icon green"></i>
                                 <p>Pengajuan Barang Keluar</p>
                             </router-link>
                         </li>
                         <li class="nav-item">
-                            <router-link to="data-level" class="nav-link ">
+                            <router-link to="qrstream" class="nav-link ">
                                 <i class="fas fa-cart-arrow-down nav-icon blue"></i>
                                 <p>Pengembalian Barang</p>
                             </router-link>
                         </li>
                         <li class="nav-item">
-                            <router-link to="data-level" class="nav-link ">
+                            <router-link to="modelselect" class="nav-link ">
                                 <i class="fas fa-archive nav-icon orange"></i>
                                 <p>History Manifest</p>
                             </router-link>
