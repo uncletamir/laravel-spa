@@ -224,6 +224,13 @@
 
 <script>
 export default {
+    // props : {
+    //     id: {
+    //         type: String, 
+    //         required: true
+    //     }
+
+    // },
     data() {
         return {
             loading: false,

@@ -60,7 +60,7 @@ class ManifestController extends Controller
      */
     public function show($id)
     {
-        //
+        return Manifest::findOrFail($id);
     }
 
     /**

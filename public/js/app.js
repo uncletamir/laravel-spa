@@ -3476,14 +3476,37 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
-  props: ['item.id'],
+  props: ['itemId'],
   data: function data() {
     return {
       id: "",
       loading: false,
       disabled: false,
       inventorys: {},
+      manifest: {},
       dt_manifests: {},
       statusmodal: false,
       form: new Form({
@@ -3494,6 +3517,9 @@ __webpack_require__.r(__webpack_exports__);
         jumlah_inventory: ""
       })
     };
+  },
+  mounted: function mounted() {
+    this.fetchManifest();
   },
   methods: {
     showModal: function showModal() {
@@ -3507,59 +3533,44 @@ __webpack_require__.r(__webpack_exports__);
       $("#modalmuncul").modal("show");
       this.form.fill(item);
     },
-    loadData: function loadData() {
+    fetchManifest: function fetchManifest() {
       var _this = this;
+
+      axios.get('/api/manifest/' + this.itemId).then(function (response) {
+        return _this.manifest = response.data;
+      });
+    },
+    loadData: function loadData() {
+      var _this2 = this;
 
       this.$Progress.start();
       this.id.push(route.params.id);
-      console.log(id);
+      console.log(id); // axios
+      //     .get("api/manifest" + this.itemId)
+      //     .then(({ data }) => (this.inventorys = data));
+
       axios.get("api/inventory").then(function (_ref) {
         var data = _ref.data;
-        return _this.inventorys = data;
+        return _this2.inventorys = data;
       });
       axios.get("api/detail-manifest").then(function (_ref2) {
         var data = _ref2.data;
-        return _this.dt_manifestss = data;
+        return _this2.dt_manifests = data;
       });
       this.$Progress.finish();
     },
     simpanData: function simpanData() {
-      var _this2 = this;
-
-      this.$Progress.start();
-      this.loading = true;
-      this.disabled = true;
-      this.form.post("api/user").then(function () {
-        Fire.$emit("refreshData");
-        $("#modalmuncul").modal("hide");
-        Toast.fire({
-          icon: "success",
-          title: "Data Berhasil Tersimpan"
-        });
-
-        _this2.$Progress.finish();
-
-        _this2.loading = false;
-        _this2.disabled = false;
-      })["catch"](function () {
-        _this2.$Progress.fail();
-
-        _this2.loading = false;
-        _this2.disabled = false;
-      });
-    },
-    ubahData: function ubahData() {
       var _this3 = this;
 
       this.$Progress.start();
       this.loading = true;
       this.disabled = true;
-      this.form.put("api/user/" + this.form.id).then(function () {
+      this.form.post("api/detail-manifest").then(function () {
         Fire.$emit("refreshData");
         $("#modalmuncul").modal("hide");
         Toast.fire({
           icon: "success",
-          title: "Data Berhasil Terupdate"
+          title: "Data Berhasil Tersimpan"
         });
 
         _this3.$Progress.finish();
@@ -3573,8 +3584,33 @@ __webpack_require__.r(__webpack_exports__);
         _this3.disabled = false;
       });
     },
-    deleteData: function deleteData(id) {
+    ubahData: function ubahData() {
       var _this4 = this;
+
+      this.$Progress.start();
+      this.loading = true;
+      this.disabled = true;
+      this.form.put("api/detail-manifest/" + this.form.id).then(function () {
+        Fire.$emit("refreshData");
+        $("#modalmuncul").modal("hide");
+        Toast.fire({
+          icon: "success",
+          title: "Data Berhasil Terupdate"
+        });
+
+        _this4.$Progress.finish();
+
+        _this4.loading = false;
+        _this4.disabled = false;
+      })["catch"](function () {
+        _this4.$Progress.fail();
+
+        _this4.loading = false;
+        _this4.disabled = false;
+      });
+    },
+    deleteData: function deleteData(id) {
+      var _this5 = this;
 
       Swal.fire({
         title: "Anda Yakin Ingin Menghapus Data Ini ?",
@@ -3586,7 +3622,7 @@ __webpack_require__.r(__webpack_exports__);
         confirmButtonText: "Hapus"
       }).then(function (result) {
         if (result.value) {
-          _this4.form["delete"]("api/user/" + id).then(function () {
+          _this5.form["delete"]("api/detail-manifest/" + id).then(function () {
             Swal.fire("Terhapus", "Data Anda Sudah Tehapus", "success");
             Fire.$emit("refreshData");
           })["catch"](function () {
@@ -3597,11 +3633,11 @@ __webpack_require__.r(__webpack_exports__);
     }
   },
   created: function created() {
-    var _this5 = this;
+    var _this6 = this;
 
     this.loadData();
     Fire.$on("refreshData", function () {
-      _this5.loadData();
+      _this6.loadData();
     });
   }
 });
@@ -3844,6 +3880,12 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
+  // props : {
+  //     id: {
+  //         type: String, 
+  //         required: true
+  //     }
+  // },
   data: function data() {
     return {
       loading: false,
@@ -4863,7 +4905,7 @@ var routes = [{
   path: '/manifest',
   component: __webpack_require__(/*! ./components/Manifest/DataManifest.vue */ "./resources/js/components/Manifest/DataManifest.vue").default
 }, {
-  path: '/detail-manifest/:item.id/edit',
+  path: '/detail-manifest/:itemId/details',
   props: true,
   component: __webpack_require__(/*! ./components/Manifest/CreateManifest.vue */ "./resources/js/components/Manifest/CreateManifest.vue").default
 }];
@@ -49459,13 +49501,27 @@ var render = function() {
     _c("div", { staticClass: "justify-content-center mt-5" }, [
       _c("div", { staticClass: "col-lg" }, [
         _c("div", { staticClass: "card" }, [
-          _c("div", { staticClass: "card-header" }, [
-            _vm._m(0),
-            _vm._v(" "),
-            _c("pre", [_vm._v("id: " + _vm._s(_vm.id))])
-          ]),
+          _vm._m(0),
           _vm._v(" "),
-          _vm._m(1)
+          _c("div", { staticClass: "card-body" }, [
+            _c("dl", [
+              _c("dt", [_vm._v("Nama Event")]),
+              _vm._v(" "),
+              _c("dd", [_vm._v(_vm._s(_vm.manifest.nama_event))]),
+              _vm._v(" "),
+              _c("dt", [_vm._v("Alamat Event")]),
+              _vm._v(" "),
+              _c("dd", [_vm._v(_vm._s(_vm.manifest.alamat_event))]),
+              _vm._v(" "),
+              _c("dt", [_vm._v("Tanggal Event")]),
+              _vm._v(" "),
+              _c("dd", [_vm._v(_vm._s(_vm.manifest.tanggal_event))]),
+              _vm._v(" "),
+              _c("dt", [_vm._v("Penanggung Jawab")]),
+              _vm._v(" "),
+              _c("dd", [_vm._v(_vm._s(_vm.manifest.penanggung_jawab))])
+            ])
+          ])
         ])
       ]),
       _vm._v(" "),
@@ -49500,7 +49556,7 @@ var render = function() {
                   "table",
                   { staticClass: "table" },
                   [
-                    _vm._m(2),
+                    _vm._m(1),
                     _vm._v(" "),
                     _vm._l(_vm.dt_manifests, function(item) {
                       return _c("tr", { key: item.id }, [
@@ -49611,7 +49667,7 @@ var render = function() {
                   ]
                 ),
                 _vm._v(" "),
-                _vm._m(3)
+                _vm._m(2)
               ]),
               _vm._v(" "),
               _c(
@@ -49630,34 +49686,55 @@ var render = function() {
                       "div",
                       { staticClass: "form-group" },
                       [
-                        _c("input", {
-                          directives: [
-                            {
-                              name: "model",
-                              rawName: "v-model",
-                              value: _vm.form.manifest_id,
-                              expression: "form.manifest_id"
-                            }
-                          ],
-                          staticClass: "form-control",
-                          class: {
-                            "is-invalid": _vm.form.errors.has("manifest_id")
-                          },
-                          attrs: { type: "text", placeholder: "Manifest ID" },
-                          domProps: { value: _vm.form.manifest_id },
-                          on: {
-                            input: function($event) {
-                              if ($event.target.composing) {
-                                return
+                        _c(
+                          "select",
+                          {
+                            directives: [
+                              {
+                                name: "model",
+                                rawName: "v-model",
+                                value: _vm.form.manifest_id,
+                                expression: "form.manifest_id"
                               }
-                              _vm.$set(
-                                _vm.form,
-                                "manifest_id",
-                                $event.target.value
-                              )
+                            ],
+                            staticClass: "form-control select2",
+                            class: {
+                              "is-invalid": _vm.form.errors.has("manifest_id")
+                            },
+                            on: {
+                              change: function($event) {
+                                var $$selectedVal = Array.prototype.filter
+                                  .call($event.target.options, function(o) {
+                                    return o.selected
+                                  })
+                                  .map(function(o) {
+                                    var val = "_value" in o ? o._value : o.value
+                                    return val
+                                  })
+                                _vm.$set(
+                                  _vm.form,
+                                  "manifest_id",
+                                  $event.target.multiple
+                                    ? $$selectedVal
+                                    : $$selectedVal[0]
+                                )
+                              }
                             }
-                          }
-                        }),
+                          },
+                          [
+                            _c(
+                              "option",
+                              { domProps: { value: _vm.manifest.id } },
+                              [
+                                _vm._v(
+                                  "\n                                    " +
+                                    _vm._s(_vm.manifest.nama_event) +
+                                    "\n                                "
+                                )
+                              ]
+                            )
+                          ]
+                        ),
                         _vm._v(" "),
                         _c("has-error", {
                           attrs: { form: _vm.form, field: "manifest_id" }
@@ -49955,36 +50032,10 @@ var staticRenderFns = [
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("h3", { staticClass: "card-title" }, [
-      _c("i", { staticClass: "fas fa-file-alt" }),
-      _vm._v("\n              Manifest Event\n            ")
-    ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "card-body" }, [
-      _c("dl", [
-        _c("dt", [_vm._v("Nama Event")]),
-        _vm._v(" "),
-        _c("dd", [_vm._v("A description list is perfect for defining terms.")]),
-        _vm._v(" "),
-        _c("dt", [_vm._v("Alamat Event")]),
-        _vm._v(" "),
-        _c("dd", [
-          _vm._v(
-            "Vestibulum id ligula porta felis euismod semper eget lacinia odio sem nec elit."
-          )
-        ]),
-        _vm._v(" "),
-        _c("dt", [_vm._v("Tanggal Event")]),
-        _vm._v(" "),
-        _c("dd", [_vm._v("Etiam porta sem malesuada magna mollis euismod.")]),
-        _vm._v(" "),
-        _c("dt", [_vm._v("Penanggung Jawab")]),
-        _vm._v(" "),
-        _c("dd", [_vm._v("Etiam porta sem malesuada magna mollis euismod.")])
+    return _c("div", { staticClass: "card-header" }, [
+      _c("h3", { staticClass: "card-title" }, [
+        _c("i", { staticClass: "fas fa-file-alt" }),
+        _vm._v("\n              Manifest Event\n            ")
       ])
     ])
   },

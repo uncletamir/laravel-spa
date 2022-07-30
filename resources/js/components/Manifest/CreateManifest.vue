@@ -9,19 +9,19 @@
                   <i class="fas fa-file-alt"></i>
                   Manifest Event
                 </h3>
-                <pre>id: {{ id }}</pre>
+                <!-- <pre>id: {{ manifest.id }}</pre> -->
               </div>
               <!-- /.card-header -->
               <div class="card-body">
                 <dl>
                   <dt>Nama Event</dt>
-                  <dd>A description list is perfect for defining terms.</dd>
+                  <dd>{{ manifest.nama_event }}</dd>
                   <dt>Alamat Event</dt>
-                  <dd>Vestibulum id ligula porta felis euismod semper eget lacinia odio sem nec elit.</dd>
+                  <dd>{{ manifest.alamat_event }}</dd>
                   <dt>Tanggal Event</dt>
-                  <dd>Etiam porta sem malesuada magna mollis euismod.</dd>
+                  <dd>{{ manifest.tanggal_event }}</dd>
                   <dt>Penanggung Jawab</dt>
-                  <dd>Etiam porta sem malesuada magna mollis euismod.</dd>
+                  <dd>{{ manifest.penanggung_jawab }}</dd>
                 </dl>
               </div>
               <!-- /.card-body -->
@@ -119,7 +119,29 @@
                         "
                     >
                         <div class="modal-body">
-                            <div class="form-group">
+                             <div class="form-group">
+                                <select
+                                    class="form-control select2"
+                                    v-model="form.manifest_id"
+                                    :class="{
+                                        'is-invalid': form.errors.has(
+                                            'manifest_id'
+                                        )
+                                    }"
+                                >
+                                    <!-- <option value> Manifest ID </option> -->
+                                    <option
+                                        :value="manifest.id"
+                                    >
+                                        {{ manifest.nama_event }}
+                                    </option>
+                                </select>
+                                <has-error
+                                    :form="form"
+                                    field="manifest_id"
+                                ></has-error>
+                            </div>
+                            <!-- <div class="form-group">
                                 <input
                                     type="text"
                                     v-model="form.manifest_id"
@@ -133,7 +155,7 @@
                                     :form="form"
                                     field="manifest_id"
                                 ></has-error>
-                            </div>
+                            </div> -->
                             <div class="form-group">
                                 <input
                                     type="text"
@@ -247,7 +269,7 @@
 
 <script>
 export default {
-    props: ['item.id'],
+    props: ['itemId'],
     
     data() {
         
@@ -256,6 +278,7 @@ export default {
             loading: false,
             disabled: false,
             inventorys: {},
+            manifest:{},
             dt_manifests: {},
             statusmodal: false,
             form: new Form({
@@ -266,6 +289,9 @@ export default {
                 jumlah_inventory: ""
             })
         };
+    },
+    mounted() {
+        this.fetchManifest();
     },
     methods: {
         showModal() {
@@ -279,17 +305,21 @@ export default {
             $("#modalmuncul").modal("show");
             this.form.fill(item);
         },
+        fetchManifest() {
+            axios.get('/api/manifest/' + this.itemId)
+                 .then(response => this.manifest = response.data);
+        },
         loadData() {
             this.$Progress.start();   
             this.id.push(route.params.id);   
             console.log(id);
-            axios
-                .get("api/manifest")
-                .then(({ data }) => (this.inventorys = data));
+            // axios
+            //     .get("api/manifest" + this.itemId)
+            //     .then(({ data }) => (this.inventorys = data));
             axios
                 .get("api/inventory")
                 .then(({ data }) => (this.inventorys = data));
-            axios.get("api/detail-manifest").then(({ data }) => (this.dt_manifestss = data));
+            axios.get("api/detail-manifest").then(({ data }) => (this.dt_manifests = data));
             this.$Progress.finish();
         },
         simpanData() {
@@ -297,7 +327,7 @@ export default {
             this.loading = true;
             this.disabled = true;
             this.form
-                .post("api/user")
+                .post("api/detail-manifest")
                 .then(() => {
                     Fire.$emit("refreshData");
                     $("#modalmuncul").modal("hide");
@@ -320,7 +350,7 @@ export default {
             this.loading = true;
             this.disabled = true;
             this.form
-                .put("api/user/" + this.form.id)
+                .put("api/detail-manifest/" + this.form.id)
                 .then(() => {
                     Fire.$emit("refreshData");
                     $("#modalmuncul").modal("hide");
@@ -350,7 +380,7 @@ export default {
             }).then(result => {
                 if (result.value) {
                     this.form
-                        .delete("api/user/" + id)
+                        .delete("api/detail-manifest/" + id)
                         .then(() => {
                             Swal.fire(
                                 "Terhapus",
