@@ -45,7 +45,9 @@ let routes =[
     { path: '/modelselect', component:require('./components/Manifest/ModelSelect.vue').default },
     { path: '/qrstream', component:require('./components/Qr/QrStream.vue').default },
     { path: '/manifest', component:require('./components/Manifest/DataManifest.vue').default },
-    { path: '/detail-manifest/:itemId/details', props:true, component:require('./components/Manifest/CreateManifest.vue').default }
+    // { path: '/detail-manifest/:itemId/details', props:true, component:require('./components/Manifest/CreateManifest.vue').default },
+    // { path: '/detail-manifest', component:require('./components/Manifest/CreateManifest.vue').default },
+    { path: '/detail-manifest/:itemId',name:'detail', props:true, component:require('./components/Manifest/DetailManifest.vue').default }
 ]
 
 Vue.component('example-component', require('./components/ExampleComponent.vue').default);

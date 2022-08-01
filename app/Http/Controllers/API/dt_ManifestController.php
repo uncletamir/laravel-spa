@@ -5,6 +5,8 @@ namespace App\Http\Controllers\API;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\dt_Manifest;
+use App\Models\Manifest;
+use App\Models\Inventory;
 
 class dt_ManifestController extends Controller
 {
@@ -37,13 +39,15 @@ class dt_ManifestController extends Controller
     public function store(Request $request)
     {
         $this->validate($request, [
-            'manifest_id' => 'required|integer',            
+            'manifest_id' => 'required|integer',
+            'inventory_id' => 'required',                
             'nama_inventory' => 'required',
             'jumlah_inventory' => 'required',
         ]);
 
         return Inventory::create([
             'manifest_id' => $request->manifest_id,
+            'inventory_id' => $request->inventory_id,
             'nama_inventory' => $request->nama_inventory,
             'jumlah_inventory' => $request->jumlah_inventory,
         ]);
@@ -57,7 +61,7 @@ class dt_ManifestController extends Controller
      */
     public function show($id)
     {
-        //
+        return dt_Manifest::where('manifest_id',$id)->get();
     }
 
     /**
@@ -81,13 +85,15 @@ class dt_ManifestController extends Controller
     public function update(Request $request, $id)
     {
         $this->validate($request, [
-            'manifest_id' => 'required|integer',            
+            'manifest_id' => 'required|integer',
+            'inventory_id' => 'required',            
             'nama_inventory' => 'required',
             'jumlah_inventory' => 'required',
         ]);
 
         $dt_dtManifest=[
             'manifest_id' => $request->manifest_id,
+            'inventory_id' => $request->inventory_id,
             'nama_inventory' => $request->nama_inventory,
             'jumlah_inventory' => $request->jumlah_inventory,
         ];
