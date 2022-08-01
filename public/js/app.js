@@ -3502,12 +3502,11 @@ __webpack_require__.r(__webpack_exports__);
   props: ['itemId'],
   data: function data() {
     return {
-      id: "",
       loading: false,
       disabled: false,
       inventorys: {},
       manifest: {},
-      dt_manifests: {},
+      dtmanifests: {},
       statusmodal: false,
       form: new Form({
         id: "",
@@ -3517,9 +3516,6 @@ __webpack_require__.r(__webpack_exports__);
         jumlah_inventory: ""
       })
     };
-  },
-  mounted: function mounted() {
-    this.fetchManifest();
   },
   methods: {
     showModal: function showModal() {
@@ -3533,34 +3529,24 @@ __webpack_require__.r(__webpack_exports__);
       $("#modalmuncul").modal("show");
       this.form.fill(item);
     },
-    fetchManifest: function fetchManifest() {
+    loadData: function loadData() {
       var _this = this;
 
+      this.$Progress.start();
       axios.get('/api/manifest/' + this.itemId).then(function (response) {
         return _this.manifest = response.data;
-      });
-    },
-    loadData: function loadData() {
-      var _this2 = this;
-
-      this.$Progress.start();
-      this.id.push(route.params.id);
-      console.log(id); // axios
-      //     .get("api/manifest" + this.itemId)
+      }); // axios
+      //     .get("api/inventory")
       //     .then(({ data }) => (this.inventorys = data));
 
-      axios.get("api/inventory").then(function (_ref) {
+      axios.get("api/detail-manifest").then(function (_ref) {
         var data = _ref.data;
-        return _this2.inventorys = data;
-      });
-      axios.get("api/detail-manifest").then(function (_ref2) {
-        var data = _ref2.data;
-        return _this2.dt_manifests = data;
+        return _this.dtmanifests = data;
       });
       this.$Progress.finish();
     },
     simpanData: function simpanData() {
-      var _this3 = this;
+      var _this2 = this;
 
       this.$Progress.start();
       this.loading = true;
@@ -3571,6 +3557,31 @@ __webpack_require__.r(__webpack_exports__);
         Toast.fire({
           icon: "success",
           title: "Data Berhasil Tersimpan"
+        });
+
+        _this2.$Progress.finish();
+
+        _this2.loading = false;
+        _this2.disabled = false;
+      })["catch"](function () {
+        _this2.$Progress.fail();
+
+        _this2.loading = false;
+        _this2.disabled = false;
+      });
+    },
+    ubahData: function ubahData() {
+      var _this3 = this;
+
+      this.$Progress.start();
+      this.loading = true;
+      this.disabled = true;
+      this.form.put("api/detail-manifest/" + this.form.id).then(function () {
+        Fire.$emit("refreshData");
+        $("#modalmuncul").modal("hide");
+        Toast.fire({
+          icon: "success",
+          title: "Data Berhasil Terupdate"
         });
 
         _this3.$Progress.finish();
@@ -3584,33 +3595,8 @@ __webpack_require__.r(__webpack_exports__);
         _this3.disabled = false;
       });
     },
-    ubahData: function ubahData() {
-      var _this4 = this;
-
-      this.$Progress.start();
-      this.loading = true;
-      this.disabled = true;
-      this.form.put("api/detail-manifest/" + this.form.id).then(function () {
-        Fire.$emit("refreshData");
-        $("#modalmuncul").modal("hide");
-        Toast.fire({
-          icon: "success",
-          title: "Data Berhasil Terupdate"
-        });
-
-        _this4.$Progress.finish();
-
-        _this4.loading = false;
-        _this4.disabled = false;
-      })["catch"](function () {
-        _this4.$Progress.fail();
-
-        _this4.loading = false;
-        _this4.disabled = false;
-      });
-    },
     deleteData: function deleteData(id) {
-      var _this5 = this;
+      var _this4 = this;
 
       Swal.fire({
         title: "Anda Yakin Ingin Menghapus Data Ini ?",
@@ -3622,7 +3608,7 @@ __webpack_require__.r(__webpack_exports__);
         confirmButtonText: "Hapus"
       }).then(function (result) {
         if (result.value) {
-          _this5.form["delete"]("api/detail-manifest/" + id).then(function () {
+          _this4.form["delete"]("api/detail-manifest/" + id).then(function () {
             Swal.fire("Terhapus", "Data Anda Sudah Tehapus", "success");
             Fire.$emit("refreshData");
           })["catch"](function () {
@@ -3633,11 +3619,11 @@ __webpack_require__.r(__webpack_exports__);
     }
   },
   created: function created() {
-    var _this6 = this;
+    var _this5 = this;
 
     this.loadData();
     Fire.$on("refreshData", function () {
-      _this6.loadData();
+      _this5.loadData();
     });
   }
 });
@@ -49558,7 +49544,7 @@ var render = function() {
                   [
                     _vm._m(1),
                     _vm._v(" "),
-                    _vm._l(_vm.dt_manifests, function(item) {
+                    _vm._l(_vm.dtmanifests, function(item) {
                       return _c("tr", { key: item.id }, [
                         _c("td", [_vm._v(_vm._s(item.nama_inventory))]),
                         _vm._v(" "),

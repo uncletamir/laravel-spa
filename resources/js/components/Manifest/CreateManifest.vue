@@ -53,7 +53,7 @@
                                         <th>Jumlah</th>
                                         <th>Aksi</th>
                                     </tr>
-                                    <tr v-for="item in dt_manifests" :key="item.id">
+                                    <tr v-for="item in dtmanifests" :key="item.id">
                                         <td>{{ item.nama_inventory }}</td>
                                         <td>{{ item.Jumlah_inventory }}</td>
                                         <td>
@@ -274,12 +274,11 @@ export default {
     data() {
         
         return {
-            id: "",
             loading: false,
             disabled: false,
             inventorys: {},
             manifest:{},
-            dt_manifests: {},
+            dtmanifests: {},
             statusmodal: false,
             form: new Form({
                 id: "",
@@ -289,9 +288,6 @@ export default {
                 jumlah_inventory: ""
             })
         };
-    },
-    mounted() {
-        this.fetchManifest();
     },
     methods: {
         showModal() {
@@ -305,21 +301,15 @@ export default {
             $("#modalmuncul").modal("show");
             this.form.fill(item);
         },
-        fetchManifest() {
-            axios.get('/api/manifest/' + this.itemId)
-                 .then(response => this.manifest = response.data);
-        },
         loadData() {
-            this.$Progress.start();   
-            this.id.push(route.params.id);   
-            console.log(id);
+            this.$Progress.start(); 
+            axios.get('/api/manifest/' + this.itemId)
+                 .then(response => this.manifest = response.data);          
             // axios
-            //     .get("api/manifest" + this.itemId)
+            //     .get("api/inventory")
             //     .then(({ data }) => (this.inventorys = data));
-            axios
-                .get("api/inventory")
-                .then(({ data }) => (this.inventorys = data));
-            axios.get("api/detail-manifest").then(({ data }) => (this.dt_manifests = data));
+            axios.get("api/detail-manifest")
+                 .then(({ data }) => (this.dtmanifests = data));
             this.$Progress.finish();
         },
         simpanData() {
