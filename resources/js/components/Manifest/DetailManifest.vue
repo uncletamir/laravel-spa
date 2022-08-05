@@ -287,7 +287,7 @@ export default {
             this.loading = true;
             this.disabled = true;
             this.form
-                .put("/api/detail-manifest" + this.form.id)
+                .put("/api/detail-manifest/" + this.form.id)
                 .then(() => {
                     Fire.$emit("refreshData");
                     $("#modalmuncul").modal("hide");

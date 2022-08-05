@@ -44,6 +44,8 @@ class dt_ManifestController extends Controller
             'nama_inventory' => 'required',
             'jumlah_inventory' => 'required',
         ]);
+
+        Inventory::where('id', $request->inventory_id)->decrement('jumlah_inventory', $request->jumlah_inventory);
         
         return dt_Manifest::create([
             'manifest_id' => $request->manifest_id,
@@ -51,11 +53,7 @@ class dt_ManifestController extends Controller
             'nama_inventory' => $request->nama_inventory,
             'jumlah_inventory' => $request->jumlah_inventory,
         ]);
-
-        $item = Inventory::find($request->inventory_id);
-        $item->update([
-            'jumlah_inventory' => "1",
-        ]);
+       
         
     }
 
@@ -97,6 +95,8 @@ class dt_ManifestController extends Controller
             'jumlah_inventory' => 'required',
         ]);
 
+              
+
         $dt_dtManifest=[
             'manifest_id' => $request->manifest_id,
             'inventory_id' => $request->inventory_id,
@@ -104,7 +104,21 @@ class dt_ManifestController extends Controller
             'jumlah_inventory' => $request->jumlah_inventory,
         ];
 
-        $ubahData = Manifest::findOrFail($id);
+        $nilaidb = Inventory::find($request->inventory_id)->value('jumlah_inventory');
+        $nilaidb2 = dt_Manifest::find($id)->value('jumlah_inventory');
+        if ($nilaidb2 > $request->jumlah_inventory) {
+            $decrement = $request->jumlah_inventory - $nilaidb2;
+            Inventory::where('id', $request->inventory_id)->decrement('jumlah_inventory', $decrement);
+            // $increment = $nilaidb2 - $request->jumlah_inventory;
+            // Inventory::where('id', $request->inventory_id)->increment('jumlah_inventory', $increment);
+        } else {
+            $increment = $nilaidb2 - $request->jumlah_inventory;
+            Inventory::where('id', $request->inventory_id)->increment('jumlah_inventory', $increment);
+            // $decrement = $request->jumlah_inventory - $nilaidb2;
+            // Inventory::where('id', $request->inventory_id)->decrement('jumlah_inventory', $decrement);
+        }
+
+        $ubahData = dt_Manifest::findOrFail($id);
         $ubahData->update($dt_dtManifest);
     }
 
@@ -116,6 +130,7 @@ class dt_ManifestController extends Controller
      */
     public function destroy($id)
     {
+        // Inventory::where('id', $request->inventory_id)->increment('jumlah_inventory', $request->jumlah_inventory);
         $hapus = dt_Manifest::findOrFail($id);
         $hapus->delete();
     }
