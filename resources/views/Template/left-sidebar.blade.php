@@ -1,10 +1,10 @@
 <aside class="main-sidebar sidebar-dark-primary elevation-4">
     <!-- Brand Logo -->
-    <a href="index3.html" class="brand-link">
+    <router-link to="/" class="brand-link">
         <img src="{{asset ('dist/img/logo.png') }}" alt="AdminLTE Logo" class="brand-image elevation-3"
             style="opacity: .8">
         <span class="brand-text font-weight-light">Antera Live</span>
-    </a>
+    </router-link>
 
     <!-- Sidebar -->
     <div class="sidebar">
@@ -33,19 +33,19 @@
                     </a>
                     <ul class="nav nav-treeview">
                         <li class="nav-item">
-                            <router-link to="inventory" class="nav-link ">
+                            <router-link to="/inventory" class="nav-link ">
                                 <i class="fas fa-boxes nav-icon green"></i>
                                 <p>Data Inventory</p>
                             </router-link>
                         </li>
                         <li class="nav-item">
-                            <router-link to="kategori" class="nav-link ">
+                            <router-link to="/kategori" class="nav-link ">
                                 <i class="fas fa-clipboard-list nav-icon blue"></i>
                                 <p>Data Kategori</p>
                             </router-link>
                         </li>
                         <li class="nav-item">
-                            <router-link to="lokasi" class="nav-link ">
+                            <router-link to="/lokasi" class="nav-link ">
                                 <i class="fas fa-map-marker-alt nav-icon blue"></i>
                                 <p>Lokasi</p>
                             </router-link>
@@ -62,19 +62,19 @@
                     </a>
                     <ul class="nav nav-treeview">
                         <li class="nav-item">
-                            <router-link to="manifest" class="nav-link ">
+                            <router-link to="/manifest" class="nav-link ">
                                 <i class="fas fa-cart-plus nav-icon green"></i>
                                 <p>Data Manifest</p>
                             </router-link>
                         </li>
                         <li class="nav-item">
-                            <router-link to="barang-keluar" class="nav-link ">
+                            <router-link to="/barang-keluar" class="nav-link ">
                                 <i class="fas fa-cart-plus nav-icon green"></i>
                                 <p>Pengajuan Barang Keluar</p>
                             </router-link>
                         </li>
                         <li class="nav-item">
-                            <router-link to="qrstream" class="nav-link ">
+                            <router-link to="/qrstream" class="nav-link ">
                                 <i class="fas fa-cart-arrow-down nav-icon blue"></i>
                                 <p>Pengembalian Barang</p>
                             </router-link>
@@ -97,13 +97,13 @@
                     </a>
                     <ul class="nav nav-treeview">
                         <li class="nav-item">
-                            <router-link to="data-user" class="nav-link ">
+                            <router-link to="/data-user" class="nav-link ">
                                 <i class="fas fa-users nav-icon green"></i>
                                 <p>Data User</p>
                             </router-link>
                         </li>
                         <li class="nav-item">
-                            <router-link to="data-level" class="nav-link ">
+                            <router-link to="/data-level" class="nav-link ">
                                 <i class="fas fa-layer-group nav-icon blue"></i>
                                 <p>Data Level</p>
                             </router-link>

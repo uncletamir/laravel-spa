@@ -39,18 +39,24 @@ class dt_ManifestController extends Controller
     public function store(Request $request)
     {
         $this->validate($request, [
-            'manifest_id' => 'required|integer',
+            'manifest_id' => 'required',
             'inventory_id' => 'required',                
             'nama_inventory' => 'required',
             'jumlah_inventory' => 'required',
         ]);
-
-        return Inventory::create([
+        
+        return dt_Manifest::create([
             'manifest_id' => $request->manifest_id,
             'inventory_id' => $request->inventory_id,
             'nama_inventory' => $request->nama_inventory,
             'jumlah_inventory' => $request->jumlah_inventory,
         ]);
+
+        $item = Inventory::find($request->inventory_id);
+        $item->update([
+            'jumlah_inventory' => "1",
+        ]);
+        
     }
 
     /**
@@ -110,7 +116,7 @@ class dt_ManifestController extends Controller
      */
     public function destroy($id)
     {
-        $hapus = Manifest::findOrFail($id);
+        $hapus = dt_Manifest::findOrFail($id);
         $hapus->delete();
     }
 }

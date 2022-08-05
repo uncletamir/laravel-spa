@@ -17,15 +17,17 @@
         @include('Template.left-sidebar')
 
         <!-- Content Wrapper. Contains page content -->
-        <div class="content-wrapper">
+        <router-view></router-view>
+        <vue-progress-bar></vue-progress-bar>
+        <!-- <div class="content-wrapper"> -->
 
             <!-- Main content -->
-            <div class="content">
+            <!-- <div class="content">
                 <router-view></router-view>
                 <vue-progress-bar></vue-progress-bar>
-            </div>
+            </div> -->
             <!-- /.content -->
-        </div>
+        <!-- </div> -->
         <!-- /.content-wrapper -->
 
 

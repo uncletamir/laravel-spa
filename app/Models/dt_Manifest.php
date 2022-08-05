@@ -8,9 +8,11 @@ use Illuminate\Database\Eloquent\Model;
 class dt_Manifest extends Model
 {
     // use HasFactory;
+    protected $guarded = [];
 
-    protected $table = "dt__manifests";
-    protected $primaryKey = "id";
+
+    // protected $table = "dt__manifests";
+    // protected $primaryKey = "id";
     protected $fillable = [
         'id',
         'manifest_id',

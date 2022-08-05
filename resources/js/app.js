@@ -36,6 +36,7 @@ import VueRouter from 'vue-router'
 Vue.use(VueRouter)
 
 let routes =[
+    { path: '/', component:require('./components/Home/HomeIndex.vue').default},
     { path: '/data-user', component:require('./components/Pengguna/Data-pengguna.vue').default },
     { path: '/data-level', component:require('./components/Pengguna/Data-level.vue').default },
     { path: '/kategori', component:require('./components/Inventory/Kategori.vue').default },
@@ -47,7 +48,8 @@ let routes =[
     { path: '/manifest', component:require('./components/Manifest/DataManifest.vue').default },
     // { path: '/detail-manifest/:itemId/details', props:true, component:require('./components/Manifest/CreateManifest.vue').default },
     // { path: '/detail-manifest', component:require('./components/Manifest/CreateManifest.vue').default },
-    { path: '/detail-manifest/:itemId',name:'detail', props:true, component:require('./components/Manifest/DetailManifest.vue').default }
+    { path: '/detail-manifest/:itemId',name:'detail', props:true, component:require('./components/Manifest/DetailManifest.vue').default },
+    { path: '/print-manifest/:itemId',name:'print-manifest', props:true, component:require('./components/Manifest/PrintManifest.vue').default }
 ]
 
 Vue.component('example-component', require('./components/ExampleComponent.vue').default);

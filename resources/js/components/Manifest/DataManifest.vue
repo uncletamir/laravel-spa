@@ -50,13 +50,15 @@
                                                 @click="showModalEdit(item)"
                                                 ><i class="fas fa-edit blue"></i
                                             ></a>
-                                            |<a
+                                            | <a
                                                 href="#"
                                                 @click="deleteData(item.id)"
                                                 ><i
                                                     class="fas fa-trash-alt red"
                                                 ></i
-                                            ></a>
+                                            ></a> | <router-link :to="{ name: 'print-manifest', params: { itemId: item.id }}">
+                                                <i class="fas fa-print">Print</i>
+                                                </router-link>
                                         </td>
                                     </tr>
                                 </table>

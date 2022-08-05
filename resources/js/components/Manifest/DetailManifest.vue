@@ -264,7 +264,7 @@ export default {
             this.loading = true;
             this.disabled = true;
             this.form
-                .post("api/detail-manifest")
+                .post("/api/detail-manifest")
                 .then(() => {
                     Fire.$emit("refreshData");
                     $("#modalmuncul").modal("hide");
@@ -287,7 +287,7 @@ export default {
             this.loading = true;
             this.disabled = true;
             this.form
-                .put("api/detail-manifest" + this.form.id)
+                .put("/api/detail-manifest" + this.form.id)
                 .then(() => {
                     Fire.$emit("refreshData");
                     $("#modalmuncul").modal("hide");
@@ -317,7 +317,7 @@ export default {
             }).then(result => {
                 if (result.value) {
                     this.form
-                        .delete("api/detail-manifest" + id)
+                        .delete("/api/detail-manifest/" + id)
                         .then(() => {
                             Swal.fire(
                                 "Terhapus",
