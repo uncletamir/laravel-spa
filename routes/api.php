@@ -12,6 +12,7 @@ use App\Http\Controllers\API\InventoryController;
 use App\Http\Controllers\API\SearchInventory;
 use App\Http\Controllers\API\ManifestController;
 use App\Http\Controllers\API\dt_ManifestController;
+use App\Http\Controllers\API\PengembalianController;
 
 Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
@@ -28,4 +29,5 @@ Route::apiResources([
     'inventory' => InventoryController::class,
     'manifest' => ManifestController::class,
     'detail-manifest' => dt_ManifestController::class,
+    'pengembalian-manifest' => PengembalianController::class,
 ]);

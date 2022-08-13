@@ -85,6 +85,36 @@
           <!-- ./col -->
         </div>
         <!-- /.row -->
+
+        <div class="row">
+          <div class="col-md-3 col-sm-6 col-12">
+            <div class="info-box">
+              <span class="info-box-icon bg-info"><i class="fa fa-envelope-o"></i></span>
+
+              <div class="info-box-content">
+                <span class="info-box-text">Pengembalian</span>
+                <span class="info-box-number">1,410</span>
+              </div>
+              <!-- /.info-box-content -->
+            </div>
+            <!-- /.info-box -->
+          </div>
+          <!-- /.col -->
+          <div class="col-md-3 col-sm-6 col-12">
+            <div class="info-box">
+              <span class="info-box-icon bg-success"><i class="fa fa-flag-o"></i></span>
+
+              <div class="info-box-content">
+                <span class="info-box-text">History</span>
+                <span class="info-box-number">410</span>
+              </div>
+              <!-- /.info-box-content -->
+            </div>
+            <!-- /.info-box -->
+          </div>
+          <!-- /.col -->        
+        </div>
+        <!-- /.row -->
       </div><!-- /.container-fluid -->
     </section>
     <!-- /.content -->

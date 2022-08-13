@@ -1,75 +1,66 @@
 <template>
-<div class="content-wrapper">
-    <div class="container">
+    <div class="content-wrapper">
+        <div class="container">
         <div class="row justify-content-center mt-5">
-            <div class="col-lg">
-            <div class="card">
-              <div class="card-header">
-                <h3 class="card-title">
-                  <i class="fa fa-text-width"></i>
-                  Data Manifest
-                </h3>
-              </div>
-              <!-- /.card-header -->
-              <div class="card-body">
-                <dl class="dl-horizontal">
-                  <dt>Nama Event</dt>
-                  <dd>{{ datas.nama_event }}</dd>
-                  <dt>Alamat Event</dt>
-                  <dd>{{ datas.alamat_event }}</dd>
-                  <dt>Tanggal Event</dt>
-                  <dd>{{ datas.tanggal_event }}</dd>
-                  <dt>Penanggung Jawab</dt>
-                  <dd>{{ datas.penanggung_jawab }}</dd>
-                </dl>
-              </div>
-              <!-- /.card-body -->
-            </div>
-            <!-- /.card -->
-          </div>
-        </div> 
-        
-        <div class="row justify-content-center mt-5">            
             <div class="col-lg">
                 <div class="card">
                     <div class="card-header">
-                        <h3 class="card-title">Data Kategori</h3>
-                        <div class="card-tools">
+                        <h3 class="card-title">Pengembalian Manifest</h3>
+                        <!-- <div class="card-tools">
                             <button
                                 type="button"
                                 class="btn btn-success"
                                 @click="showModal"
                             >
-                                Tambah Inventory
+                                Tambah Manifest
                             </button>
-                        </div>
+                        </div> -->
                     </div>
                     <div class="card-body">
                         <div class="form-group">
                             <div class="table-responsive">
                                 <table class="table">
                                     <tr>
-                                        <th>Nama Kategori</th>
-                                        <th>Jumlah Inventory</th>                                        
-                                        <th>Aksi</th>
+                                        <th>Nama Event</th>
+                                        <th>Lokasi Event</th>
+                                        <th>Tanggal Event</th>
+                                        <th>Penanggung Jawab</th>
+                                        <th>Details Inventory Event</th>                                        
+                                        <!-- <th>Aksi</th> -->
                                     </tr>
-                                    <tr v-for="item in dtInven" :key="item.id">
-                                        <td>{{ item.nama_inventory }}</td>
-                                        <td>{{ item.jumlah_inventory }}</td>
+                                    <tr v-for="item in manifests" :key="item.id">
+                                        <td>{{ item.nama_event }}</td>
+                                        <td>{{ item.alamat_event }}</td>
+                                        <td>{{ item.tanggal_event }}</td>
+                                        <td>{{ item.penanggung_jawab }}</td>
                                         <td>
+                                            <!-- <router-link :to="'/detail-manifest/' + item.id + '/details'">Details</router-link> -->
+                                            <!-- <router-link :to="'/detail-manifest/' + item.id">Details</router-link> -->
+                                            <router-link :to="{ name: 'detail-pengembalian', params: { itemId: item.id }}">Details</router-link>
+                                            <!-- <button
+                                                type="button"
+                                                class="btn btn-success"
+                                                @click="goToDetail(item.id)"
+                                            >
+                                                Detail Barang
+                                            </button> -->
+                                        </td>
+                                        <!-- <td>
                                             <a
                                                 href="#"
                                                 @click="showModalEdit(item)"
                                                 ><i class="fas fa-edit blue"></i
                                             ></a>
-                                            |<a
+                                            | <a
                                                 href="#"
                                                 @click="deleteData(item.id)"
                                                 ><i
                                                     class="fas fa-trash-alt red"
                                                 ></i
-                                            ></a>
-                                        </td>
+                                            ></a> | <router-link :to="{ name: 'print-manifest', params: { itemId: item.id }}">
+                                                <i class="fas fa-print">Print</i>
+                                                </router-link>
+                                        </td> -->
                                     </tr>
                                 </table>
                             </div>
@@ -79,7 +70,7 @@
             </div>
         </div>
         <!-- Modal -->
-        <div
+        <!-- <div
             class="modal fade"
             id="modalmuncul"
             tabindex="-1"
@@ -95,14 +86,14 @@
                             id="exampleModalLongTitle"
                             v-show="!statusmodal"
                         >
-                            Tambah Inventory
+                            Tambah Manifest
                         </h5>
                         <h5
                             class="modal-title"
                             id="exampleModalLongTitle"
                             v-show="statusmodal"
                         >
-                            Ubah Inventory
+                            Ubah Manifest
                         </h5>
                         <button
                             type="button"
@@ -122,61 +113,76 @@
                             <div class="form-group">
                                 <input
                                     type="text"
-                                    v-model="form.manifest_id"
+                                    v-model="form.nama_event"
                                     class="form-control"
-                                    placeholder="ID Manifest"
+                                    placeholder="Nama Event"
                                     :class="{
-                                        'is-invalid': form.errors.has('manifest_id')
+                                        'is-invalid': form.errors.has('nama_event')
                                     }"
                                 />
                                 <has-error
                                     :form="form"
-                                    field="manifest_id"
+                                    field="nama_event"
                                 ></has-error>
                             </div>
                             <div class="form-group">
                                 <input
                                     type="text"
-                                    v-model="form.inventory_id"
+                                    v-model="form.alamat_event"
                                     class="form-control"
-                                    placeholder="ID Inventory"
+                                    placeholder="Lokasi Event"
                                     :class="{
-                                        'is-invalid': form.errors.has('inventory_id')
+                                        'is-invalid': form.errors.has('alamat_event')
                                     }"
                                 />
                                 <has-error
                                     :form="form"
-                                    field="inventory_id"
+                                    field="alamat_event"
+                                ></has-error>
+                            </div>
+                            <div class="form-group">
+                                <input
+                                    type="date"
+                                    v-model="form.tanggal_event"
+                                    class="form-control"
+                                    placeholder="Tanggal Event"
+                                    :class="{
+                                        'is-invalid': form.errors.has('tanggal_event')
+                                    }"
+                                />
+                                <has-error
+                                    :form="form"
+                                    field="tanggal_event"
                                 ></has-error>
                             </div>
                             <div class="form-group">
                                 <input
                                     type="text"
-                                    v-model="form.nama_inventory"
+                                    v-model="form.penanggung_jawab"
                                     class="form-control"
-                                    placeholder="Nama Inventory"
+                                    placeholder="Penanggung Jawab Event"
                                     :class="{
-                                        'is-invalid': form.errors.has('nama_inventory')
+                                        'is-invalid': form.errors.has('penanggung_jawab')
                                     }"
                                 />
                                 <has-error
                                     :form="form"
-                                    field="nama_inventory"
+                                    field="penanggung_jawab"
                                 ></has-error>
                             </div>
                             <div class="form-group">
                                 <input
-                                    type="number"
-                                    v-model="form.jumlah_inventory"
+                                    type="text"
+                                    v-model="form.note"
                                     class="form-control"
-                                    placeholder="Jumlah Inventory"
+                                    placeholder="Note"
                                     :class="{
-                                        'is-invalid': form.errors.has('jumlah_inventory')
+                                        'is-invalid': form.errors.has('note')
                                     }"
                                 />
                                 <has-error
                                     :form="form"
-                                    field="jumlah_inventory"
+                                    field="note"
                                 ></has-error>
                             </div>
                         </div>
@@ -216,33 +222,44 @@
                     </form>
                 </div>
             </div>
-        </div>
+        </div> -->
         <!-- /Modal -->
     </div>
-</div>
+    </div>
     
 </template>
 
 <script>
 export default {
-    props:['itemId'],
+    // props : {
+    //     id: {
+    //         type: String, 
+    //         required: true
+    //     }
+
+    // },
     data() {
         return {
             loading: false,
             disabled: false,
-            datas: {},
-            dtInven:{},
+            manifests: {},
             statusmodal: false,
             form: new Form({
                 id: "",
-                manifest_id:"",
-                inventory_id:"",
-                nama_inventory: "",
-                jumlah_inventory:""
+                nama_event:"",
+                alamat_event:"",
+                tanggal_event:"",
+                penanggung_jawab:"",
+                note:""               
             })
         };
     },
+    
     methods: {
+        // goToDetail(item){
+        //     // this.$router.push('/detail-manifest');
+        //     this.$router.push({path:'/detail-manifest', params: {id: "1" }}); 
+        // },
         showModal() {
             this.statusmodal = false;
             this.form.reset();
@@ -255,11 +272,10 @@ export default {
             this.form.fill(item);
         },
         loadData() {
-            this.$Progress.start();            
-                axios.get("/api/manifest/" + this.itemId)
-                 .then(response => this.datas = response.data); 
-                axios.get("/api/detail-manifest/" + this.itemId)
-                .then(response => this.dtInven = response.data);            
+            this.$Progress.start();
+            axios
+                .get("api/manifest")
+                .then(({ data }) => (this.manifests = data));            
             this.$Progress.finish();
         },
         simpanData() {
@@ -267,7 +283,7 @@ export default {
             this.loading = true;
             this.disabled = true;
             this.form
-                .post("/api/detail-manifest")
+                .post("api/manifest")
                 .then(() => {
                     Fire.$emit("refreshData");
                     $("#modalmuncul").modal("hide");
@@ -290,7 +306,7 @@ export default {
             this.loading = true;
             this.disabled = true;
             this.form
-                .put("/api/detail-manifest/" + this.form.id)
+                .put("api/manifest/" + this.form.id)
                 .then(() => {
                     Fire.$emit("refreshData");
                     $("#modalmuncul").modal("hide");
@@ -320,7 +336,7 @@ export default {
             }).then(result => {
                 if (result.value) {
                     this.form
-                        .delete("/api/detail-manifest/" + id)
+                        .delete("api/manifest/" + id)
                         .then(() => {
                             Swal.fire(
                                 "Terhapus",

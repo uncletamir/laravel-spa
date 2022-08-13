@@ -34,15 +34,6 @@
                 <div class="card">
                     <div class="card-header">
                         <h3 class="card-title">Data Kategori</h3>
-                        <div class="card-tools">
-                            <button
-                                type="button"
-                                class="btn btn-success"
-                                @click="showModal"
-                            >
-                                Tambah Inventory
-                            </button>
-                        </div>
                     </div>
                     <div class="card-body">
                         <div class="form-group">
@@ -50,25 +41,18 @@
                                 <table class="table">
                                     <tr>
                                         <th>Nama Kategori</th>
-                                        <th>Jumlah Inventory</th>                                        
+                                        <th>Jumlah Inventory</th>
+                                        <th>Status</th>                                        
                                         <th>Aksi</th>
                                     </tr>
                                     <tr v-for="item in dtInven" :key="item.id">
                                         <td>{{ item.nama_inventory }}</td>
                                         <td>{{ item.jumlah_inventory }}</td>
+                                        <td>{{ item.id }}</td>
+                                        <!-- <td v-if= "{{ item.jumlah_inventory }} = 0">Sudah dikembalikan</td>
+                                        <td v-else> Belum dikembalikan</td> -->
                                         <td>
-                                            <a
-                                                href="#"
-                                                @click="showModalEdit(item)"
-                                                ><i class="fas fa-edit blue"></i
-                                            ></a>
-                                            |<a
-                                                href="#"
-                                                @click="deleteData(item.id)"
-                                                ><i
-                                                    class="fas fa-trash-alt red"
-                                                ></i
-                                            ></a>
+                                             <button type="button" class="btn btn-success" @click="deleteData(item.id)">Kembalikan</button>
                                         </td>
                                     </tr>
                                 </table>
@@ -79,7 +63,7 @@
             </div>
         </div>
         <!-- Modal -->
-        <div
+        <!-- <div
             class="modal fade"
             id="modalmuncul"
             tabindex="-1"
@@ -216,7 +200,7 @@
                     </form>
                 </div>
             </div>
-        </div>
+        </div> -->
         <!-- /Modal -->
     </div>
 </div>
@@ -310,17 +294,17 @@ export default {
         },
         deleteData(id) {
             Swal.fire({
-                title: "Anda Yakin Ingin Menghapus Data Ini ?",
-                text: "Klik Batal Untuk Membatalkan Penghapusan",
+                title: "Apakah Inventory Sudah Lengkap ?",
+                text: "Pastikan Inventory Sudah Lengkap!",
                 icon: "warning",
                 showCancelButton: true,
                 confirmButtonColor: "#3085d6",
                 cancelButtonColor: "#d33",
-                confirmButtonText: "Hapus"
+                confirmButtonText: "Kembalikan"
             }).then(result => {
                 if (result.value) {
                     this.form
-                        .delete("/api/detail-manifest/" + id)
+                        .delete("/api/pengembalian-manifest/" + id)
                         .then(() => {
                             Swal.fire(
                                 "Terhapus",

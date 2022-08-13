@@ -1,5 +1,6 @@
 <template>
-    <div class="container">
+    <div class="content-wrapper">
+        <div class="container">
         <div class="row justify-content-center mt-5">
             <div class="col-lg">
                 <div class="card">
@@ -11,7 +12,7 @@
                                 class="btn btn-success"
                                 @click="showModal"
                             >
-                                Tambah Kategori
+                                Tambah Manifest
                             </button>
                         </div>
                     </div>
@@ -224,6 +225,8 @@
         </div>
         <!-- /Modal -->
     </div>
+    </div>
+    
 </template>
 
 <script>

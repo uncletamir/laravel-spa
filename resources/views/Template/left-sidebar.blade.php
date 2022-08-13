@@ -74,9 +74,15 @@
                             </router-link>
                         </li>
                         <li class="nav-item">
-                            <router-link to="/qrstream" class="nav-link ">
+                            <router-link to="/pengembalian-manifest" class="nav-link ">
                                 <i class="fas fa-cart-arrow-down nav-icon blue"></i>
                                 <p>Pengembalian Barang</p>
+                            </router-link>
+                        </li>
+                        <li class="nav-item">
+                            <router-link to="/qrstream" class="nav-link ">
+                                <i class="fas fa-cart-arrow-down nav-icon blue"></i>
+                                <p>QR</p>
                             </router-link>
                         </li>
                         <li class="nav-item">
