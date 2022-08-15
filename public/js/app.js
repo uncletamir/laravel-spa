@@ -4001,9 +4001,6 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
-//
-//
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   props: ['itemId'],
   data: function data() {
@@ -4109,7 +4106,7 @@ __webpack_require__.r(__webpack_exports__);
         confirmButtonText: "Hapus"
       }).then(function (result) {
         if (result.value) {
-          _this4.form["delete"]("/api/detail-manifest/" + id).then(function () {
+          _this4.form.put("/api/pengembalian-manifest/" + id)["delete"]("/api/detail-manifest/" + id).then(function () {
             Swal.fire("Terhapus", "Data Anda Sudah Tehapus", "success");
             Fire.$emit("refreshData");
           })["catch"](function () {
@@ -4456,7 +4453,7 @@ __webpack_require__.r(__webpack_exports__);
         confirmButtonText: "Kembalikan"
       }).then(function (result) {
         if (result.value) {
-          _this4.form["delete"]("/api/detail-manifest/" + id).then(function () {
+          _this4.form["delete"]("/api/pengembalian-manifest/" + id).then(function () {
             Swal.fire("Terhapus", "Data Anda Sudah Tehapus", "success");
             Fire.$emit("refreshData");
           })["catch"](function () {
@@ -51712,456 +51709,445 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c("div", { staticClass: "content-wrapper" }, [
-    _c("div", { staticClass: "container" }, [
-      _c("div", { staticClass: "row justify-content-center mt-5" }, [
-        _c("div", { staticClass: "col-lg" }, [
-          _c("div", { staticClass: "card" }, [
-            _vm._m(0),
+  return _c("div", { staticClass: "container" }, [
+    _c("div", { staticClass: "row justify-content-center mt-5" }, [
+      _c("div", { staticClass: "col-lg" }, [
+        _c("div", { staticClass: "card" }, [
+          _vm._m(0),
+          _vm._v(" "),
+          _c("div", { staticClass: "card-body" }, [
+            _c("dl", { staticClass: "dl-horizontal" }, [
+              _c("dt", [_vm._v("Nama Event")]),
+              _vm._v(" "),
+              _c("dd", [_vm._v(_vm._s(_vm.datas.nama_event))]),
+              _vm._v(" "),
+              _c("dt", [_vm._v("Alamat Event")]),
+              _vm._v(" "),
+              _c("dd", [_vm._v(_vm._s(_vm.datas.alamat_event))]),
+              _vm._v(" "),
+              _c("dt", [_vm._v("Tanggal Event")]),
+              _vm._v(" "),
+              _c("dd", [_vm._v(_vm._s(_vm.datas.tanggal_event))]),
+              _vm._v(" "),
+              _c("dt", [_vm._v("Penanggung Jawab")]),
+              _vm._v(" "),
+              _c("dd", [_vm._v(_vm._s(_vm.datas.penanggung_jawab))])
+            ])
+          ])
+        ])
+      ])
+    ]),
+    _vm._v(" "),
+    _c("div", { staticClass: "row justify-content-center mt-5" }, [
+      _c("div", { staticClass: "col-lg" }, [
+        _c("div", { staticClass: "card" }, [
+          _c("div", { staticClass: "card-header" }, [
+            _c("h3", { staticClass: "card-title" }, [_vm._v("Data Kategori")]),
             _vm._v(" "),
-            _c("div", { staticClass: "card-body" }, [
-              _c("dl", { staticClass: "dl-horizontal" }, [
-                _c("dt", [_vm._v("Nama Event")]),
-                _vm._v(" "),
-                _c("dd", [_vm._v(_vm._s(_vm.datas.nama_event))]),
-                _vm._v(" "),
-                _c("dt", [_vm._v("Alamat Event")]),
-                _vm._v(" "),
-                _c("dd", [_vm._v(_vm._s(_vm.datas.alamat_event))]),
-                _vm._v(" "),
-                _c("dt", [_vm._v("Tanggal Event")]),
-                _vm._v(" "),
-                _c("dd", [_vm._v(_vm._s(_vm.datas.tanggal_event))]),
-                _vm._v(" "),
-                _c("dt", [_vm._v("Penanggung Jawab")]),
-                _vm._v(" "),
-                _c("dd", [_vm._v(_vm._s(_vm.datas.penanggung_jawab))])
+            _c("div", { staticClass: "card-tools" }, [
+              _c(
+                "button",
+                {
+                  staticClass: "btn btn-success",
+                  attrs: { type: "button" },
+                  on: { click: _vm.showModal }
+                },
+                [
+                  _vm._v(
+                    "\n                            Tambah Kategori\n                        "
+                  )
+                ]
+              )
+            ])
+          ]),
+          _vm._v(" "),
+          _c("div", { staticClass: "card-body" }, [
+            _c("div", { staticClass: "form-group" }, [
+              _c("div", { staticClass: "table-responsive" }, [
+                _c(
+                  "table",
+                  { staticClass: "table" },
+                  [
+                    _vm._m(1),
+                    _vm._v(" "),
+                    _vm._l(_vm.dtInven, function(item) {
+                      return _c("tr", { key: item.id }, [
+                        _c("td", [_vm._v(_vm._s(item.nama_inventory))]),
+                        _vm._v(" "),
+                        _c("td", [_vm._v(_vm._s(item.jumlah_inventory))]),
+                        _vm._v(" "),
+                        _c("td", [
+                          _c(
+                            "a",
+                            {
+                              attrs: { href: "#" },
+                              on: {
+                                click: function($event) {
+                                  return _vm.showModalEdit(item)
+                                }
+                              }
+                            },
+                            [_c("i", { staticClass: "fas fa-edit blue" })]
+                          ),
+                          _vm._v("\n                                        |"),
+                          _c(
+                            "a",
+                            {
+                              attrs: { href: "#" },
+                              on: {
+                                click: function($event) {
+                                  return _vm.deleteData(item.id)
+                                }
+                              }
+                            },
+                            [_c("i", { staticClass: "fas fa-trash-alt red" })]
+                          )
+                        ])
+                      ])
+                    })
+                  ],
+                  2
+                )
               ])
             ])
           ])
         ])
-      ]),
-      _vm._v(" "),
-      _c("div", { staticClass: "row justify-content-center mt-5" }, [
-        _c("div", { staticClass: "col-lg" }, [
-          _c("div", { staticClass: "card" }, [
-            _c("div", { staticClass: "card-header" }, [
-              _c("h3", { staticClass: "card-title" }, [
-                _vm._v("Data Kategori")
-              ]),
-              _vm._v(" "),
-              _c("div", { staticClass: "card-tools" }, [
+      ])
+    ]),
+    _vm._v(" "),
+    _c(
+      "div",
+      {
+        staticClass: "modal fade",
+        attrs: {
+          id: "modalmuncul",
+          tabindex: "-1",
+          role: "dialog",
+          "aria-labelledby": "modalmuncul1",
+          "aria-hidden": "true"
+        }
+      },
+      [
+        _c(
+          "div",
+          {
+            staticClass: "modal-dialog modal-dialog-centered",
+            attrs: { role: "document" }
+          },
+          [
+            _c("div", { staticClass: "modal-content" }, [
+              _c("div", { staticClass: "modal-header" }, [
                 _c(
-                  "button",
+                  "h5",
                   {
-                    staticClass: "btn btn-success",
-                    attrs: { type: "button" },
-                    on: { click: _vm.showModal }
+                    directives: [
+                      {
+                        name: "show",
+                        rawName: "v-show",
+                        value: !_vm.statusmodal,
+                        expression: "!statusmodal"
+                      }
+                    ],
+                    staticClass: "modal-title",
+                    attrs: { id: "exampleModalLongTitle" }
                   },
                   [
                     _vm._v(
-                      "\r\n                                Tambah Inventory\r\n                            "
+                      "\n                        Tambah Inventory\n                    "
                     )
                   ]
-                )
-              ])
-            ]),
-            _vm._v(" "),
-            _c("div", { staticClass: "card-body" }, [
-              _c("div", { staticClass: "form-group" }, [
-                _c("div", { staticClass: "table-responsive" }, [
-                  _c(
-                    "table",
-                    { staticClass: "table" },
-                    [
-                      _vm._m(1),
-                      _vm._v(" "),
-                      _vm._l(_vm.dtInven, function(item) {
-                        return _c("tr", { key: item.id }, [
-                          _c("td", [_vm._v(_vm._s(item.nama_inventory))]),
-                          _vm._v(" "),
-                          _c("td", [_vm._v(_vm._s(item.jumlah_inventory))]),
-                          _vm._v(" "),
-                          _c("td", [
-                            _c(
-                              "a",
-                              {
-                                attrs: { href: "#" },
-                                on: {
-                                  click: function($event) {
-                                    return _vm.showModalEdit(item)
-                                  }
-                                }
-                              },
-                              [_c("i", { staticClass: "fas fa-edit blue" })]
-                            ),
-                            _vm._v(
-                              "\r\n                                            |"
-                            ),
-                            _c(
-                              "a",
-                              {
-                                attrs: { href: "#" },
-                                on: {
-                                  click: function($event) {
-                                    return _vm.deleteData(item.id)
-                                  }
-                                }
-                              },
-                              [_c("i", { staticClass: "fas fa-trash-alt red" })]
-                            )
-                          ])
-                        ])
-                      })
-                    ],
-                    2
-                  )
-                ])
-              ])
-            ])
-          ])
-        ])
-      ]),
-      _vm._v(" "),
-      _c(
-        "div",
-        {
-          staticClass: "modal fade",
-          attrs: {
-            id: "modalmuncul",
-            tabindex: "-1",
-            role: "dialog",
-            "aria-labelledby": "modalmuncul1",
-            "aria-hidden": "true"
-          }
-        },
-        [
-          _c(
-            "div",
-            {
-              staticClass: "modal-dialog modal-dialog-centered",
-              attrs: { role: "document" }
-            },
-            [
-              _c("div", { staticClass: "modal-content" }, [
-                _c("div", { staticClass: "modal-header" }, [
-                  _c(
-                    "h5",
-                    {
-                      directives: [
-                        {
-                          name: "show",
-                          rawName: "v-show",
-                          value: !_vm.statusmodal,
-                          expression: "!statusmodal"
-                        }
-                      ],
-                      staticClass: "modal-title",
-                      attrs: { id: "exampleModalLongTitle" }
-                    },
-                    [
-                      _vm._v(
-                        "\r\n                            Tambah Inventory\r\n                        "
-                      )
-                    ]
-                  ),
-                  _vm._v(" "),
-                  _c(
-                    "h5",
-                    {
-                      directives: [
-                        {
-                          name: "show",
-                          rawName: "v-show",
-                          value: _vm.statusmodal,
-                          expression: "statusmodal"
-                        }
-                      ],
-                      staticClass: "modal-title",
-                      attrs: { id: "exampleModalLongTitle" }
-                    },
-                    [
-                      _vm._v(
-                        "\r\n                            Ubah Inventory\r\n                        "
-                      )
-                    ]
-                  ),
-                  _vm._v(" "),
-                  _vm._m(2)
-                ]),
+                ),
                 _vm._v(" "),
                 _c(
-                  "form",
+                  "h5",
                   {
-                    on: {
-                      submit: function($event) {
-                        $event.preventDefault()
-                        _vm.statusmodal ? _vm.ubahData() : _vm.simpanData()
+                    directives: [
+                      {
+                        name: "show",
+                        rawName: "v-show",
+                        value: _vm.statusmodal,
+                        expression: "statusmodal"
                       }
-                    }
+                    ],
+                    staticClass: "modal-title",
+                    attrs: { id: "exampleModalLongTitle" }
                   },
                   [
-                    _c("div", { staticClass: "modal-body" }, [
-                      _c(
-                        "div",
-                        { staticClass: "form-group" },
-                        [
-                          _c("input", {
-                            directives: [
-                              {
-                                name: "model",
-                                rawName: "v-model",
-                                value: _vm.form.manifest_id,
-                                expression: "form.manifest_id"
-                              }
-                            ],
-                            staticClass: "form-control",
-                            class: {
-                              "is-invalid": _vm.form.errors.has("manifest_id")
-                            },
-                            attrs: { type: "text", placeholder: "ID Manifest" },
-                            domProps: { value: _vm.form.manifest_id },
-                            on: {
-                              input: function($event) {
-                                if ($event.target.composing) {
-                                  return
-                                }
-                                _vm.$set(
-                                  _vm.form,
-                                  "manifest_id",
-                                  $event.target.value
-                                )
-                              }
-                            }
-                          }),
-                          _vm._v(" "),
-                          _c("has-error", {
-                            attrs: { form: _vm.form, field: "manifest_id" }
-                          })
-                        ],
-                        1
-                      ),
-                      _vm._v(" "),
-                      _c(
-                        "div",
-                        { staticClass: "form-group" },
-                        [
-                          _c("input", {
-                            directives: [
-                              {
-                                name: "model",
-                                rawName: "v-model",
-                                value: _vm.form.inventory_id,
-                                expression: "form.inventory_id"
-                              }
-                            ],
-                            staticClass: "form-control",
-                            class: {
-                              "is-invalid": _vm.form.errors.has("inventory_id")
-                            },
-                            attrs: {
-                              type: "text",
-                              placeholder: "ID Inventory"
-                            },
-                            domProps: { value: _vm.form.inventory_id },
-                            on: {
-                              input: function($event) {
-                                if ($event.target.composing) {
-                                  return
-                                }
-                                _vm.$set(
-                                  _vm.form,
-                                  "inventory_id",
-                                  $event.target.value
-                                )
-                              }
-                            }
-                          }),
-                          _vm._v(" "),
-                          _c("has-error", {
-                            attrs: { form: _vm.form, field: "inventory_id" }
-                          })
-                        ],
-                        1
-                      ),
-                      _vm._v(" "),
-                      _c(
-                        "div",
-                        { staticClass: "form-group" },
-                        [
-                          _c("input", {
-                            directives: [
-                              {
-                                name: "model",
-                                rawName: "v-model",
-                                value: _vm.form.nama_inventory,
-                                expression: "form.nama_inventory"
-                              }
-                            ],
-                            staticClass: "form-control",
-                            class: {
-                              "is-invalid": _vm.form.errors.has(
-                                "nama_inventory"
-                              )
-                            },
-                            attrs: {
-                              type: "text",
-                              placeholder: "Nama Inventory"
-                            },
-                            domProps: { value: _vm.form.nama_inventory },
-                            on: {
-                              input: function($event) {
-                                if ($event.target.composing) {
-                                  return
-                                }
-                                _vm.$set(
-                                  _vm.form,
-                                  "nama_inventory",
-                                  $event.target.value
-                                )
-                              }
-                            }
-                          }),
-                          _vm._v(" "),
-                          _c("has-error", {
-                            attrs: { form: _vm.form, field: "nama_inventory" }
-                          })
-                        ],
-                        1
-                      ),
-                      _vm._v(" "),
-                      _c(
-                        "div",
-                        { staticClass: "form-group" },
-                        [
-                          _c("input", {
-                            directives: [
-                              {
-                                name: "model",
-                                rawName: "v-model",
-                                value: _vm.form.jumlah_inventory,
-                                expression: "form.jumlah_inventory"
-                              }
-                            ],
-                            staticClass: "form-control",
-                            class: {
-                              "is-invalid": _vm.form.errors.has(
-                                "jumlah_inventory"
-                              )
-                            },
-                            attrs: {
-                              type: "number",
-                              placeholder: "Jumlah Inventory"
-                            },
-                            domProps: { value: _vm.form.jumlah_inventory },
-                            on: {
-                              input: function($event) {
-                                if ($event.target.composing) {
-                                  return
-                                }
-                                _vm.$set(
-                                  _vm.form,
-                                  "jumlah_inventory",
-                                  $event.target.value
-                                )
-                              }
-                            }
-                          }),
-                          _vm._v(" "),
-                          _c("has-error", {
-                            attrs: { form: _vm.form, field: "jumlah_inventory" }
-                          })
-                        ],
-                        1
-                      )
-                    ]),
-                    _vm._v(" "),
-                    _c("div", { staticClass: "modal-footer" }, [
-                      _c(
-                        "button",
-                        {
-                          staticClass: "btn btn-secondary",
-                          attrs: { type: "button", "data-dismiss": "modal" }
-                        },
-                        [
-                          _vm._v(
-                            "\r\n                                Close\r\n                            "
-                          )
-                        ]
-                      ),
-                      _vm._v(" "),
-                      _c(
-                        "button",
-                        {
-                          directives: [
-                            {
-                              name: "show",
-                              rawName: "v-show",
-                              value: !_vm.statusmodal,
-                              expression: "!statusmodal"
-                            }
-                          ],
-                          staticClass: "btn btn-primary",
-                          attrs: { type: "submit", disabled: _vm.disabled }
-                        },
-                        [
-                          _c("i", {
-                            directives: [
-                              {
-                                name: "show",
-                                rawName: "v-show",
-                                value: _vm.loading,
-                                expression: "loading"
-                              }
-                            ],
-                            staticClass: "fa fa-spinner fa-spin"
-                          }),
-                          _vm._v(
-                            "\r\n                                Simpan\r\n                            "
-                          )
-                        ]
-                      ),
-                      _vm._v(" "),
-                      _c(
-                        "button",
-                        {
-                          directives: [
-                            {
-                              name: "show",
-                              rawName: "v-show",
-                              value: _vm.statusmodal,
-                              expression: "statusmodal"
-                            }
-                          ],
-                          staticClass: "btn btn-success",
-                          attrs: { type: "submit", disabled: _vm.disabled }
-                        },
-                        [
-                          _c("i", {
-                            directives: [
-                              {
-                                name: "show",
-                                rawName: "v-show",
-                                value: _vm.loading,
-                                expression: "loading"
-                              }
-                            ],
-                            staticClass: "fa fa-spinner fa-spin"
-                          }),
-                          _vm._v(
-                            "\r\n                                Ubah\r\n                            "
-                          )
-                        ]
-                      )
-                    ])
+                    _vm._v(
+                      "\n                        Ubah Inventory\n                    "
+                    )
                   ]
-                )
-              ])
-            ]
-          )
-        ]
-      )
-    ])
+                ),
+                _vm._v(" "),
+                _vm._m(2)
+              ]),
+              _vm._v(" "),
+              _c(
+                "form",
+                {
+                  on: {
+                    submit: function($event) {
+                      $event.preventDefault()
+                      _vm.statusmodal ? _vm.ubahData() : _vm.simpanData()
+                    }
+                  }
+                },
+                [
+                  _c("div", { staticClass: "modal-body" }, [
+                    _c(
+                      "div",
+                      { staticClass: "form-group" },
+                      [
+                        _c("input", {
+                          directives: [
+                            {
+                              name: "model",
+                              rawName: "v-model",
+                              value: _vm.form.manifest_id,
+                              expression: "form.manifest_id"
+                            }
+                          ],
+                          staticClass: "form-control",
+                          class: {
+                            "is-invalid": _vm.form.errors.has("manifest_id")
+                          },
+                          attrs: { type: "text", placeholder: "ID Manifest" },
+                          domProps: { value: _vm.form.manifest_id },
+                          on: {
+                            input: function($event) {
+                              if ($event.target.composing) {
+                                return
+                              }
+                              _vm.$set(
+                                _vm.form,
+                                "manifest_id",
+                                $event.target.value
+                              )
+                            }
+                          }
+                        }),
+                        _vm._v(" "),
+                        _c("has-error", {
+                          attrs: { form: _vm.form, field: "manifest_id" }
+                        })
+                      ],
+                      1
+                    ),
+                    _vm._v(" "),
+                    _c(
+                      "div",
+                      { staticClass: "form-group" },
+                      [
+                        _c("input", {
+                          directives: [
+                            {
+                              name: "model",
+                              rawName: "v-model",
+                              value: _vm.form.inventory_id,
+                              expression: "form.inventory_id"
+                            }
+                          ],
+                          staticClass: "form-control",
+                          class: {
+                            "is-invalid": _vm.form.errors.has("inventory_id")
+                          },
+                          attrs: { type: "text", placeholder: "ID Inventory" },
+                          domProps: { value: _vm.form.inventory_id },
+                          on: {
+                            input: function($event) {
+                              if ($event.target.composing) {
+                                return
+                              }
+                              _vm.$set(
+                                _vm.form,
+                                "inventory_id",
+                                $event.target.value
+                              )
+                            }
+                          }
+                        }),
+                        _vm._v(" "),
+                        _c("has-error", {
+                          attrs: { form: _vm.form, field: "inventory_id" }
+                        })
+                      ],
+                      1
+                    ),
+                    _vm._v(" "),
+                    _c(
+                      "div",
+                      { staticClass: "form-group" },
+                      [
+                        _c("input", {
+                          directives: [
+                            {
+                              name: "model",
+                              rawName: "v-model",
+                              value: _vm.form.nama_inventory,
+                              expression: "form.nama_inventory"
+                            }
+                          ],
+                          staticClass: "form-control",
+                          class: {
+                            "is-invalid": _vm.form.errors.has("nama_inventory")
+                          },
+                          attrs: {
+                            type: "text",
+                            placeholder: "Nama Inventory"
+                          },
+                          domProps: { value: _vm.form.nama_inventory },
+                          on: {
+                            input: function($event) {
+                              if ($event.target.composing) {
+                                return
+                              }
+                              _vm.$set(
+                                _vm.form,
+                                "nama_inventory",
+                                $event.target.value
+                              )
+                            }
+                          }
+                        }),
+                        _vm._v(" "),
+                        _c("has-error", {
+                          attrs: { form: _vm.form, field: "nama_inventory" }
+                        })
+                      ],
+                      1
+                    ),
+                    _vm._v(" "),
+                    _c(
+                      "div",
+                      { staticClass: "form-group" },
+                      [
+                        _c("input", {
+                          directives: [
+                            {
+                              name: "model",
+                              rawName: "v-model",
+                              value: _vm.form.jumlah_inventory,
+                              expression: "form.jumlah_inventory"
+                            }
+                          ],
+                          staticClass: "form-control",
+                          class: {
+                            "is-invalid": _vm.form.errors.has(
+                              "jumlah_inventory"
+                            )
+                          },
+                          attrs: {
+                            type: "number",
+                            placeholder: "Jumlah Inventory"
+                          },
+                          domProps: { value: _vm.form.jumlah_inventory },
+                          on: {
+                            input: function($event) {
+                              if ($event.target.composing) {
+                                return
+                              }
+                              _vm.$set(
+                                _vm.form,
+                                "jumlah_inventory",
+                                $event.target.value
+                              )
+                            }
+                          }
+                        }),
+                        _vm._v(" "),
+                        _c("has-error", {
+                          attrs: { form: _vm.form, field: "jumlah_inventory" }
+                        })
+                      ],
+                      1
+                    )
+                  ]),
+                  _vm._v(" "),
+                  _c("div", { staticClass: "modal-footer" }, [
+                    _c(
+                      "button",
+                      {
+                        staticClass: "btn btn-secondary",
+                        attrs: { type: "button", "data-dismiss": "modal" }
+                      },
+                      [
+                        _vm._v(
+                          "\n                            Close\n                        "
+                        )
+                      ]
+                    ),
+                    _vm._v(" "),
+                    _c(
+                      "button",
+                      {
+                        directives: [
+                          {
+                            name: "show",
+                            rawName: "v-show",
+                            value: !_vm.statusmodal,
+                            expression: "!statusmodal"
+                          }
+                        ],
+                        staticClass: "btn btn-primary",
+                        attrs: { type: "submit", disabled: _vm.disabled }
+                      },
+                      [
+                        _c("i", {
+                          directives: [
+                            {
+                              name: "show",
+                              rawName: "v-show",
+                              value: _vm.loading,
+                              expression: "loading"
+                            }
+                          ],
+                          staticClass: "fa fa-spinner fa-spin"
+                        }),
+                        _vm._v(
+                          "\n                            Simpan\n                        "
+                        )
+                      ]
+                    ),
+                    _vm._v(" "),
+                    _c(
+                      "button",
+                      {
+                        directives: [
+                          {
+                            name: "show",
+                            rawName: "v-show",
+                            value: _vm.statusmodal,
+                            expression: "statusmodal"
+                          }
+                        ],
+                        staticClass: "btn btn-success",
+                        attrs: { type: "submit", disabled: _vm.disabled }
+                      },
+                      [
+                        _c("i", {
+                          directives: [
+                            {
+                              name: "show",
+                              rawName: "v-show",
+                              value: _vm.loading,
+                              expression: "loading"
+                            }
+                          ],
+                          staticClass: "fa fa-spinner fa-spin"
+                        }),
+                        _vm._v(
+                          "\n                            Ubah\n                        "
+                        )
+                      ]
+                    )
+                  ])
+                ]
+              )
+            ])
+          ]
+        )
+      ]
+    )
   ])
 }
 var staticRenderFns = [
@@ -52172,7 +52158,7 @@ var staticRenderFns = [
     return _c("div", { staticClass: "card-header" }, [
       _c("h3", { staticClass: "card-title" }, [
         _c("i", { staticClass: "fa fa-text-width" }),
-        _vm._v("\r\n                  Data Manifest\r\n                ")
+        _vm._v("\n              Data Manifest\n            ")
       ])
     ])
   },
@@ -65215,8 +65201,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
 /*!
-  * vue-router v3.5.4
-  * (c) 2022 Evan You
+  * vue-router v3.5.1
+  * (c) 2021 Evan You
   * @license MIT
   */
 /*  */
@@ -65228,7 +65214,7 @@ function assert (condition, message) {
 }
 
 function warn (condition, message) {
-  if (!condition) {
+  if ( true && !condition) {
     typeof console !== 'undefined' && console.warn(("[vue-router] " + message));
   }
 }
@@ -65734,7 +65720,7 @@ function parsePath (path) {
 }
 
 function cleanPath (path) {
-  return path.replace(/\/(?:\s*\/)+/g, '/')
+  return path.replace(/\/\//g, '/')
 }
 
 var isarray = Array.isArray || function (arr) {
@@ -66665,7 +66651,7 @@ function addRouteRecord (
         warn(
           false,
           "Named Route '" + (route.name) + "' has a default child route. " +
-            "When navigating to this named route (:to=\"{name: '" + (route.name) + "'}\"), " +
+            "When navigating to this named route (:to=\"{name: '" + (route.name) + "'\"), " +
             "the default child route will not be rendered. Remove the name from " +
             "this route and use the name of the default child route for named " +
             "links instead."
@@ -66778,7 +66764,7 @@ function createMatcher (
     createRouteMap([route || parentOrRoute], pathList, pathMap, nameMap, parent);
 
     // add aliases of parent
-    if (parent && parent.alias.length) {
+    if (parent) {
       createRouteMap(
         // $flow-disable-line route is defined if parent is
         parent.alias.map(function (alias) { return ({ path: alias, children: [route] }); }),
@@ -67526,9 +67512,7 @@ History.prototype.confirmTransition = function confirmTransition (route, onCompl
           cb(err);
         });
       } else {
-        if (true) {
-          warn(false, 'uncaught error during route navigation:');
-        }
+        warn(false, 'uncaught error during route navigation:');
         console.error(err);
       }
     }
@@ -67543,9 +67527,6 @@ History.prototype.confirmTransition = function confirmTransition (route, onCompl
     route.matched[lastRouteIndex] === current.matched[lastCurrentIndex]
   ) {
     this.ensureURL();
-    if (route.hash) {
-      handleScroll(this.router, current, route, false);
-    }
     return abort(createNavigationDuplicatedError(current, route))
   }
 
@@ -67854,13 +67835,7 @@ var HTML5History = /*@__PURE__*/(function (History) {
 
 function getLocation (base) {
   var path = window.location.pathname;
-  var pathLowerCase = path.toLowerCase();
-  var baseLowerCase = base.toLowerCase();
-  // base="/a" shouldn't turn path="/app" into "/a/pp"
-  // https://github.com/vuejs/vue-router/issues/3555
-  // so we ensure the trailing slash in the base
-  if (base && ((pathLowerCase === baseLowerCase) ||
-    (pathLowerCase.indexOf(cleanPath(baseLowerCase + '/')) === 0))) {
+  if (base && path.toLowerCase().indexOf(base.toLowerCase()) === 0) {
     path = path.slice(base.length);
   }
   return (path || '/') + window.location.search + window.location.hash
@@ -68109,9 +68084,6 @@ var AbstractHistory = /*@__PURE__*/(function (History) {
 var VueRouter = function VueRouter (options) {
   if ( options === void 0 ) options = {};
 
-  if (true) {
-    warn(this instanceof VueRouter, "Router must be called with the new operator.");
-  }
   this.app = null;
   this.apps = [];
   this.options = options;
@@ -68356,7 +68328,7 @@ function createHref (base, fullPath, mode) {
 }
 
 VueRouter.install = install;
-VueRouter.version = '3.5.4';
+VueRouter.version = '3.5.1';
 VueRouter.isNavigationFailure = isNavigationFailure;
 VueRouter.NavigationFailureType = NavigationFailureType;
 VueRouter.START_LOCATION = START;

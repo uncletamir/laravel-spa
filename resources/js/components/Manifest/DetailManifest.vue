@@ -1,5 +1,4 @@
 <template>
-<div class="content-wrapper">
     <div class="container">
         <div class="row justify-content-center mt-5">
             <div class="col-lg">
@@ -40,7 +39,7 @@
                                 class="btn btn-success"
                                 @click="showModal"
                             >
-                                Tambah Inventory
+                                Tambah Kategori
                             </button>
                         </div>
                     </div>
@@ -219,8 +218,6 @@
         </div>
         <!-- /Modal -->
     </div>
-</div>
-    
 </template>
 
 <script>
@@ -320,6 +317,7 @@ export default {
             }).then(result => {
                 if (result.value) {
                     this.form
+                        .put("/api/pengembalian-manifest/" + id)
                         .delete("/api/detail-manifest/" + id)
                         .then(() => {
                             Swal.fire(
